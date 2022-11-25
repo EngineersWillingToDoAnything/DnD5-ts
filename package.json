@@ -1,0 +1,17 @@
+{
+  "name": "dnd5-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/EngineersWillingToDoAnything/DnD5-js.git",
+  "authors": [
+    {
+      "name": "Alejandro Suarez Martin",
+      "email": "tbw4530@gmail.com"
+    },
+    {
+      "name": "Gian Luis Bolivar Diana",
+      "email": "gianluisbolivar1@gmail.com"
+    } 
+  ],
+  "license": "MIT"
+}
