@@ -1,7 +1,7 @@
 {
   "name": "dnd5-js",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "",
   "repository": "https://github.com/EngineersWillingToDoAnything/DnD5-js.git",
   "authors": [
     {
@@ -11,7 +11,17 @@
     {
       "name": "Gian Luis Bolivar Diana",
       "email": "gianluisbolivar1@gmail.com"
-    } 
+    }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "29.2.4",
+    "jest": "29.3.1",
+    "ts-jest": "29.0.3",
+    "ts-node": "10.9.1",
+    "typescript": "4.9.3"
+  }
 }
