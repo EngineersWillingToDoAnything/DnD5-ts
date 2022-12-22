@@ -32,7 +32,7 @@ describe ('Character health system', () => {
   });
 
   it ('Should not be able to have negative health points', () => {
-    testCharacter.takeDamage(10);
+    testCharacter.takeDamage(10_000);
     expect(testCharacter.healthPoints.current).toBe(0);
   });
 
@@ -49,7 +49,7 @@ describe ('Character health system', () => {
   });
 
   it ('Should not be able to heal over its max health points', () => {
-    testCharacter.heal(10);
+    testCharacter.heal(10_000);
     expect(testCharacter.healthPoints.current).toBe(testCharacter.healthPoints.max);
   });
 });
