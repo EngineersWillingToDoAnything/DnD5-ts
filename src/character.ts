@@ -6,6 +6,7 @@
  */
 export default class Character {
   public readonly name: string;
+  public level: number = 1;
 
   /**
    * Create a new DnD character
