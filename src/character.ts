@@ -1,3 +1,5 @@
+import type { HP } from "./types";
+
 /**
  * @classdesc Represent a D&D character
  *
@@ -6,7 +8,7 @@
  */
 export default class Character {
   public level: number = 1;
-  public healthPoints: number = 3;
+  public readonly healthPoints: HP = { max: 3, current: 3 };
 
   /**
    * Create a new DnD character
@@ -22,15 +24,15 @@ export default class Character {
    * @param damage The amount of damage to take
    */
   public takeDamage(damage: number) {
-    this.healthPoints -= damage;
-    if (this.healthPoints < 0) this.healthPoints = 0;
+    this.healthPoints.current -= damage;
+    if (this.healthPoints.current < 0) this.healthPoints.current = 0;
   }
 
   /**
    * @brief Reset the health points to the maximum
    */
   public resetHealth() {
-    this.healthPoints = 3;
+    this.healthPoints.current = this.healthPoints.max;
   }
 
   /**
@@ -39,7 +41,7 @@ export default class Character {
    * @param healAmount The amount of health to heal
    */
   public heal(healAmount: number) {
-    this.healthPoints += healAmount;
-    if (this.healthPoints > 3) this.healthPoints = 3;
+    this.healthPoints.current += healAmount;
+    if (this.healthPoints.current > this.healthPoints.max) this.healthPoints.current = this.healthPoints.max;
   }
 }
