@@ -2,7 +2,7 @@ import Character from './character';
 
 let testCharacter: Character;
 beforeAll(() => {
-  testCharacter = new Character({ name: 'John Doe' });
+  testCharacter = new Character('John Doe');
 })
 
 describe ('Character properties tests', () => {
