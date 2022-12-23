@@ -5,3 +5,8 @@
  * @property {number} current The current health points the character has
  */
 export interface HP { max: number, current: number };
+
+/**
+ * All the languages available in the dnd world.
+ */
+export type Language = 'Common' | 'Elvish' | 'Dwarvish' | 'Infernal';
