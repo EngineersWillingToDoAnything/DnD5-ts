@@ -27,6 +27,17 @@ describe ('Character properties tests', () => {
   it ('Know at least the "Common" language', () => {
     expect(testCharacter.knowsLanguage('Common')).toBe(true);
   });
+
+  it ('Should not know any other language', () => {
+    expect(testCharacter.knowsLanguage('Dwarvish')).toBe(false);
+    expect(testCharacter.knowsLanguage('Elvish')).toBe(false);
+    expect(testCharacter.knowsLanguage('Infernal')).toBe(false);
+  });
+
+  it ('Should have a true neutral alignment', () => {
+    expect(testCharacter.alignment.ethical).toBe('Neutral');
+    expect(testCharacter.alignment.moral).toBe('Neutral');
+  });
 });
 
 
@@ -58,6 +69,7 @@ describe ('Character health system', () => {
     expect(testCharacter.healthPoints.current).toBe(testCharacter.healthPoints.max);
   });
 });
+
 
 describe ('Character language system', () => {
   it ('Should tell if it knows a language', () => {

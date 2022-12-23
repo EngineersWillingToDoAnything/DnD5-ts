@@ -1,4 +1,4 @@
-import type { HP, Language } from "./types";
+import type { Alignment, HP, Language } from "./types";
 
 /**
  * @classdesc Represent a D&D character
@@ -9,6 +9,7 @@ import type { HP, Language } from "./types";
 export default class Character {
   public level: number = 1;
   public readonly healthPoints: HP = { max: 3, current: 3 };
+  public readonly alignment: Alignment = { ethical: 'Neutral', moral: 'Neutral' };
   private readonly languages: Language[] = ['Common'];
 
   /**

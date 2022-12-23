@@ -10,3 +10,24 @@ export interface HP { max: number, current: number };
  * All the languages available in the dnd world.
  */
 export type Language = 'Common' | 'Elvish' | 'Dwarvish' | 'Infernal';
+
+/**
+ * The alignment of a character
+ *
+ * @property {Ethical} ethical The character's ethical alignment
+ * @property {Moral} moral The character's moral alignment
+ */
+export interface Alignment {
+  ethical: Ethical;
+  moral: Moral;
+}
+
+/**
+ * The ethical alignment of a character
+ */
+export type Ethical = 'Lawful' | 'Neutral' | 'Chaotic';
+
+/**
+ * The moral alignment of a character
+ */
+export type Moral = 'Good' | 'Neutral' | 'Evil';
