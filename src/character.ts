@@ -117,14 +117,14 @@ export default class Character {
    * @param points The amount of points to add
    */
   public addPointsToStat(stat: keyof Stats, points: number) {
-    if (points < 0) throw new StatError('Cannot add negative points');
+    if (points < 0) throw new StatError(0);
 
-    if (this.stats.assignablePoints < points) throw new StatError('Not enough assignable points');
+    if (this.stats.assignablePoints < points) throw new StatError(3);
 
     if (this.level === 1) {
-      if (this.stats[stat] + points > 18) throw new StatError('Cannot have a stat above 18 on level 1');
+      if (this.stats[stat] + points > 18) throw new StatError(1);
     } else {
-      if (this.stats[stat] + points > 20) throw new StatError('Cannot assign more than 20 points to any stat.');
+      if (this.stats[stat] + points > 20) throw new StatError(2);
     }
 
     this.stats[stat] += points;
@@ -147,9 +147,9 @@ export default class Character {
    * @param points The amount of points to remove
    */
   public removePointsFromStat(stat: keyof Stats, points: number) {
-    if (points < 0) throw new StatError('Cannot remove negative points');
+    if (points < 0) throw new StatError(4);
 
-    if (this.stats[stat] - points < 0) throw new StatError('Cannot have a stat below 0');
+    if (this.stats[stat] - points < 0) throw new StatError(5);
 
     this.stats[stat] -= points;
     this.stats.assignablePoints += points;

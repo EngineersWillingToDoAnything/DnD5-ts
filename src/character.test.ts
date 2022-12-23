@@ -164,22 +164,22 @@ describe ('Character stats system', () => {
 
   it ('Should not be able to add more points than available', () => {
     expect(() => testCharacter.addPointsToStat('strength', 100)).toThrow(StatError);
-    expect(() => testCharacter.addPointsToStat('strength', 100)).toThrow('Not enough assignable points');
+    expect(() => testCharacter.addPointsToStat('strength', 100)).toThrow(StatError.getMessage(3));
   });
 
   it ('Should not be able to add points to a stat that has reached its max value', () => {
     testCharacter.addPointsToStat('strength', 10);
     expect(() => testCharacter.addPointsToStat('strength', 1)).toThrow(StatError);
-    expect(() => testCharacter.addPointsToStat('strength', 1)).toThrow('Cannot have a stat above 18 on level 1');
+    expect(() => testCharacter.addPointsToStat('strength', 1)).toThrow(StatError.getMessage(1));
     testCharacter.level += 1; // After level 1, max stat value is 20
     testCharacter.addPointsToStat('strength', 2);
     expect(() => testCharacter.addPointsToStat('strength', 1)).toThrow(StatError);
-    expect(() => testCharacter.addPointsToStat('strength', 1)).toThrow('Cannot assign more than 20 points to any stat.');
+    expect(() => testCharacter.addPointsToStat('strength', 1)).toThrow(StatError.getMessage(2));
   });
 
   it ('Should not be able to add negative points to a stat', () => {
     expect(() => testCharacter.addPointsToStat('strength', -1)).toThrow(StatError);
-    expect(() => testCharacter.addPointsToStat('strength', -1)).toThrow('Cannot add negative points');
+    expect(() => testCharacter.addPointsToStat('strength', -1)).toThrow(StatError.getMessage(0));
   });
 
   it ('Should be able to reset all stats', () => {
@@ -217,11 +217,11 @@ describe ('Character stats system', () => {
     testCharacter.addPointsToStat('strength', 10);
     expect(testCharacter.stats.strength).toBe(18);
     expect(() => testCharacter.removePointsFromStat('strength', 24)).toThrow(StatError);
-    expect(() => testCharacter.removePointsFromStat('strength', 24)).toThrow('Cannot have a stat below 0');
+    expect(() => testCharacter.removePointsFromStat('strength', 24)).toThrow(StatError.getMessage(5));
   });
 
   it ('Should not be able to remove negative points from a stat', () => {
     expect(() => testCharacter.removePointsFromStat('strength', -1)).toThrow(StatError);
-    expect(() => testCharacter.removePointsFromStat('strength', -1)).toThrow('Cannot remove negative points');
+    expect(() => testCharacter.removePointsFromStat('strength', -1)).toThrow(StatError.getMessage(4));
   });
 });
