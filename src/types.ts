@@ -12,6 +12,16 @@ export interface HP { max: number, current: number };
 export type Language = 'Common' | 'Elvish' | 'Dwarvish' | 'Infernal';
 
 /**
+ * The ethical alignment of a character
+ */
+export type Ethical = 'Lawful' | 'Neutral' | 'Chaotic';
+
+/**
+ * The moral alignment of a character
+ */
+export type Moral = 'Good' | 'Neutral' | 'Evil';
+
+/**
  * The alignment of a character
  *
  * @property {Ethical} ethical The character's ethical alignment
@@ -23,11 +33,21 @@ export interface Alignment {
 }
 
 /**
- * The ethical alignment of a character
+ * Six Abilities that provides a quick description of every creature's
+ * physical and mental characteristics
+ *
+ * @property {number} strength Measuring physical power
+ * @property {number} dexterity Measuring agility
+ * @property {number} constitution Measuring endurance
+ * @property {number} intelligence Measuring reasoning and memory
+ * @property {number} wisdom Measuring Perception and Insight
+ * @property {number} charisma Measuring force of Personality
  */
-export type Ethical = 'Lawful' | 'Neutral' | 'Chaotic';
-
-/**
- * The moral alignment of a character
- */
-export type Moral = 'Good' | 'Neutral' | 'Evil';
+export interface Stats {
+  strength: number;
+  dexterity: number;
+  constitution: number;
+  intelligence: number;
+  wisdom: number;
+  charisma: number;
+}
