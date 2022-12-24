@@ -1,4 +1,4 @@
-import type { Alignment, HP, Language, Stats } from "./types";
+import type { Alignment, HP, Language, Stats, Proficiencies } from "./types";
 import { StatError } from "./errors";
 
 /**
@@ -11,6 +11,10 @@ interface CharStats extends Stats {
   assignablePoints: number;
 }
 
+interface ProfAndBonus extends Proficiencies {
+  bonus: number;
+}
+
 /**
  * @description The basic information about a character
  * @property {string} name The name of the character
@@ -18,6 +22,7 @@ interface CharStats extends Stats {
  * @property {HP} healthPoints The health points of the character (max and current)
  * @property {Alignment} alignment The ideology of the character
  * @property {Stats} stats The stats of the character
+ * @property {Proficiencies} proficiencies The things that the character is good at
  */
 interface ICharacter {
   readonly name: string;
@@ -27,6 +32,7 @@ interface ICharacter {
   readonly alignment?: Alignment;
   readonly stats?: Stats;
   readonly languages?: Language[];
+  readonly proficiencies?: Proficiencies;
 }
 
 /**
@@ -41,8 +47,9 @@ export default class Character implements ICharacter {
   public readonly name: string = '';
   public readonly healthPoints: HP = { max: 3, current: 3 };
   public readonly alignment: Alignment = { ethical: 'Neutral', moral: 'Neutral' };
-  readonly languages: Language[] = ['Common'];
+  public readonly languages: Language[] = ['Common'];
   public readonly stats: CharStats;
+  public readonly proficiencies: ProfAndBonus;
 
   /**
    * Create a new DnD character
@@ -70,6 +77,21 @@ export default class Character implements ICharacter {
       for (const stat in data.stats) {
         this.removePointsFromStat(stat as keyof Stats, 8);
         this.addPointsToStat(stat as keyof Stats, data.stats[stat as keyof Stats] as number);
+      }
+    }
+    this.proficiencies = {
+      bonus: 2,
+      armor: [],
+      weapons: [],
+      tools: [],
+      savingThrows: [],
+      skills: []
+    }
+    if (data?.proficiencies) {
+      for (const proficiencyType in data.proficiencies) {
+        for (const proficiencies of data.proficiencies[proficiencyType as keyof Proficiencies]) {
+          this.addProficiency(proficiencyType as keyof Proficiencies, proficiencies);
+        }
       }
     }
   }
@@ -188,5 +210,18 @@ export default class Character implements ICharacter {
 
     this.stats[stat] = statValue - points;
     this.stats.assignablePoints += points;
+  }
+
+  /**
+   * @brief Add a proficiency to the character
+   * @param proficiencyType The proficiency type to add
+   * @param proficiency The specific proficiency to add
+   */
+  public addProficiency(proficiencyType: keyof Proficiencies, proficiency: string) {
+    if (proficiencyType === 'savingThrows') {
+      this.proficiencies[proficiencyType].push(proficiency as keyof Stats);
+      return;
+    }
+    this.proficiencies[proficiencyType].push(proficiency);
   }
 }

@@ -31,7 +31,6 @@ export interface Alignment {
   ethical: Ethical;
   moral: Moral;
 }
-
 /**
  * Six Abilities that provides a quick description of every creature's
  * physical and mental characteristics
@@ -50,4 +49,11 @@ export interface Stats {
   intelligence?: number;
   wisdom?: number;
   charisma?: number;
+}
+export interface Proficiencies {
+  armor: string[];
+  weapons: string[];
+  tools: string[];
+  savingThrows: (keyof Stats)[];
+  skills: string[];
 }

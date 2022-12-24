@@ -303,3 +303,22 @@ describe ('Character constructor with parameters', () => {
     });
   });
 });
+
+describe ('Character proficiency system', () => {
+  it('Should have a proficiency bonus', () => {
+    expect(testCharacter.proficiencies.bonus).toBe(2);
+  });
+
+  it('Should be able to add a skill proficiency', () => {
+    testCharacter.addProficiency('skills', 'acrobatics');
+    expect(testCharacter.proficiencies.skills).toContain('acrobatics');
+  });
+
+  it('Should be able to add many armor proficiencies', () => {
+    testCharacter.addProficiency('armor', 'light armor');
+    testCharacter.addProficiency('armor', 'heavy armor');
+    expect(testCharacter.proficiencies.armor).toContain('light armor');
+    expect(testCharacter.proficiencies.armor).toContain('heavy armor');
+  });
+
+});
