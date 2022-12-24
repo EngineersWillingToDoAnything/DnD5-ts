@@ -4,7 +4,7 @@ import type { Config } from 'jest';
 const config: Config = {
   coverageThreshold: {
     global: {
-      lines: 100
+      lines: 80
     }
   },
   preset: 'ts-jest',       // A preset that is used as a base for Jest's configuration

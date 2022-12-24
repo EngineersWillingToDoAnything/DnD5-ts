@@ -44,10 +44,10 @@ export interface Alignment {
  * @property {number} charisma Measuring force of Personality
  */
 export interface Stats {
-  strength: number;
-  dexterity: number;
-  constitution: number;
-  intelligence: number;
-  wisdom: number;
-  charisma: number;
+  strength?: number;
+  dexterity?: number;
+  constitution?: number;
+  intelligence?: number;
+  wisdom?: number;
+  charisma?: number;
 }

@@ -3,7 +3,7 @@ import { StatError } from './errors';
 
 let testCharacter: Character;
 beforeAll (() => {
-  testCharacter = new Character('John Doe');
+  testCharacter = new Character({ name: 'John Doe' });
 });
 
 beforeEach (() => {

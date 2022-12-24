@@ -11,25 +11,43 @@ interface CharStats extends Stats {
   assignablePoints: number;
 }
 
+interface ICharacter {
+  readonly name: string;
+
+  level?: number;
+  readonly healthPoints?: HP;
+  readonly alignment?: Alignment;
+  readonly stats?: Stats;
+  readonly languages?: Language[];
+}
+
 /**
  * @classdesc Represent a D&D character
  *
  * @export
  * @default
  */
-export default class Character {
+export default class Character implements ICharacter {
   public level: number = 1;
+  public readonly name: string = '';
   public readonly healthPoints: HP = { max: 3, current: 3 };
   public readonly alignment: Alignment = { ethical: 'Neutral', moral: 'Neutral' };
-  private readonly languages: Language[] = ['Common'];
+  readonly languages: Language[] = ['Common'];
   public readonly stats: CharStats;
 
   /**
    * Create a new DnD character
    * @param name The name of the character
    */
-  constructor(public readonly name: string) {
-    this.name = name;
+  constructor(data?: ICharacter) {
+    if (data?.name) this.name = data.name;
+    if (data?.level) this.level = data.level;
+    if (data?.healthPoints) this.healthPoints = data.healthPoints;
+    if (data?.alignment) this.alignment = data.alignment;
+    if (data?.languages) {
+      for (const lang of data.languages) this.learnLanguage(lang);
+    }
+
     this.stats = {
       strength: 8,
       dexterity: 8,
@@ -38,6 +56,12 @@ export default class Character {
       wisdom: 8,
       charisma: 8,
       assignablePoints: 27,
+    }
+    if (data?.stats) {
+      for (const stat in data.stats) {
+        this.removePointsFromStat(stat as keyof Stats, 8);
+        this.addPointsToStat(stat as keyof Stats, data.stats[stat as keyof Stats] as number);
+      }
     }
   }
 
@@ -121,13 +145,14 @@ export default class Character {
 
     if (this.stats.assignablePoints < points) throw new StatError(3);
 
+    const statValue = this.stats[stat] as number;
     if (this.level === 1) {
-      if (this.stats[stat] + points > 18) throw new StatError(1);
+      if (statValue + points > 18) throw new StatError(1);
     } else {
-      if (this.stats[stat] + points > 20) throw new StatError(2);
+      if (statValue + points > 20) throw new StatError(2);
     }
 
-    this.stats[stat] += points;
+    this.stats[stat] = statValue + points;
     this.stats.assignablePoints -= points;
   }
 
@@ -149,9 +174,10 @@ export default class Character {
   public removePointsFromStat(stat: keyof Stats, points: number) {
     if (points < 0) throw new StatError(4);
 
-    if (this.stats[stat] - points < 0) throw new StatError(5);
+    const statValue = this.stats[stat] as number;
+    if (statValue - points < 0) throw new StatError(5);
 
-    this.stats[stat] -= points;
+    this.stats[stat] = statValue - points;
     this.stats.assignablePoints += points;
   }
 }
