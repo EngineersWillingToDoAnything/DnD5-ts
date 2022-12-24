@@ -11,6 +11,12 @@ interface CharStats extends Stats {
   assignablePoints: number;
 }
 
+/**
+ * @description The proficiencies of a character with the bonus they get from them
+ * @property {number} bonus The modifier to add to the rolls with proficiencies
+ *
+ * @extends Proficiencies
+ */
 interface ProfAndBonus extends Proficiencies {
   bonus: number;
 }
@@ -79,6 +85,7 @@ export default class Character implements ICharacter {
         this.addPointsToStat(stat as keyof Stats, data.stats[stat as keyof Stats] as number);
       }
     }
+
     this.proficiencies = {
       bonus: 2,
       armor: [],
@@ -86,13 +93,6 @@ export default class Character implements ICharacter {
       tools: [],
       savingThrows: [],
       skills: []
-    }
-    if (data?.proficiencies) {
-      for (const proficiencyType in data.proficiencies) {
-        for (const proficiencies of data.proficiencies[proficiencyType as keyof Proficiencies]) {
-          this.addProficiency(proficiencyType as keyof Proficiencies, proficiencies);
-        }
-      }
     }
   }
 
@@ -217,11 +217,11 @@ export default class Character implements ICharacter {
    * @param proficiencyType The proficiency type to add
    * @param proficiency The specific proficiency to add
    */
-  public addProficiency(proficiencyType: keyof Proficiencies, proficiency: string) {
+  public addProficiency(proficiencyType: keyof Proficiencies, proficiency: (string | keyof Stats)[]) {
     if (proficiencyType === 'savingThrows') {
-      this.proficiencies[proficiencyType].push(proficiency as keyof Stats);
+      this.proficiencies[proficiencyType].push(...proficiency as (keyof Stats)[]);
       return;
     }
-    this.proficiencies[proficiencyType].push(proficiency);
+    this.proficiencies[proficiencyType].push(...proficiency);
   }
 }

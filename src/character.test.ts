@@ -46,30 +46,55 @@ describe ('Character properties tests', () => {
     expect(testCharacter.alignment.moral).toBe('Neutral');
   });
 
-  it ('Should have the six basic stats', () => {
-    expect(testCharacter).toHaveProperty('stats');
-    expect(testCharacter.stats).toHaveProperty('strength');
-    expect(testCharacter.stats).toHaveProperty('dexterity');
-    expect(testCharacter.stats).toHaveProperty('constitution');
-    expect(testCharacter.stats).toHaveProperty('intelligence');
-    expect(testCharacter.stats).toHaveProperty('wisdom');
-    expect(testCharacter.stats).toHaveProperty('charisma');
+  describe ('Stats properties', () => {
+    it ('Should have the six basic stats', () => {
+      expect(testCharacter).toHaveProperty('stats');
+      expect(testCharacter.stats).toHaveProperty('strength');
+      expect(testCharacter.stats).toHaveProperty('dexterity');
+      expect(testCharacter.stats).toHaveProperty('constitution');
+      expect(testCharacter.stats).toHaveProperty('intelligence');
+      expect(testCharacter.stats).toHaveProperty('wisdom');
+      expect(testCharacter.stats).toHaveProperty('charisma');
+    });
+
+    it ('Should have 8 as the base value for all stats', () => {
+      expect(testCharacter.stats.strength).toBe(8);
+      expect(testCharacter.stats.dexterity).toBe(8);
+      expect(testCharacter.stats.constitution).toBe(8);
+      expect(testCharacter.stats.intelligence).toBe(8);
+      expect(testCharacter.stats.wisdom).toBe(8);
+      expect(testCharacter.stats.charisma).toBe(8);
+    });
+
+    it ('Should have 27 assignable points', () => {
+      expect(testCharacter.stats.assignablePoints).toBe(27);
+    });
   });
 
-  it ('Should have 8 as the base value for all stats', () => {
-    expect(testCharacter.stats.strength).toBe(8);
-    expect(testCharacter.stats.dexterity).toBe(8);
-    expect(testCharacter.stats.constitution).toBe(8);
-    expect(testCharacter.stats.intelligence).toBe(8);
-    expect(testCharacter.stats.wisdom).toBe(8);
-    expect(testCharacter.stats.charisma).toBe(8);
-  });
+  describe ('Proficiencies properties', () => {
+    it ('Should have a proficiency section', () => {
+      expect(testCharacter).toHaveProperty('proficiencies');
+      expect(testCharacter.proficiencies).toHaveProperty('armor');
+      expect(testCharacter.proficiencies).toHaveProperty('weapons');
+      expect(testCharacter.proficiencies).toHaveProperty('tools');
+      expect(testCharacter.proficiencies).toHaveProperty('savingThrows');
+      expect(testCharacter.proficiencies).toHaveProperty('skills');
+    });
 
-  it ('Should have 27 assignable points', () => {
-    expect(testCharacter.stats.assignablePoints).toBe(27);
+    it ('Should not have any proficiency', () => {
+      expect(testCharacter.proficiencies.armor).toHaveLength(0);
+      expect(testCharacter.proficiencies.weapons).toHaveLength(0);
+      expect(testCharacter.proficiencies.tools).toHaveLength(0);
+      expect(testCharacter.proficiencies.savingThrows).toHaveLength(0);
+      expect(testCharacter.proficiencies.skills).toHaveLength(0);
+    });
+
+    it ('Should have a proficiency bonus of 2', () => {
+      expect(testCharacter.proficiencies).toHaveProperty('bonus');
+      expect(testCharacter.proficiencies.bonus).toBe(2);
+    });
   });
 });
-
 
 describe ('Character health system', () => {
   it ('Should be able to take damage', () => {
@@ -99,7 +124,6 @@ describe ('Character health system', () => {
     expect(testCharacter.healthPoints.current).toBe(testCharacter.healthPoints.max);
   });
 });
-
 
 describe ('Character language system', () => {
   it ('Should tell if it knows a language', () => {
@@ -151,7 +175,6 @@ describe ('Character language system', () => {
     expect(testCharacter.languagesKnown()).toHaveLength(1); // Common
   });
 });
-
 
 describe ('Character stats system', () => {
   it ('Should be able to add points to a stat', () => {
@@ -226,7 +249,6 @@ describe ('Character stats system', () => {
     expect(() => testCharacter.removePointsFromStat('strength', -1)).toThrow(StatError.getMessage(4));
   });
 });
-
 
 describe ('Character constructor with parameters', () => {
   it ('Should be able to create with a name', () => {
@@ -309,16 +331,18 @@ describe ('Character proficiency system', () => {
     expect(testCharacter.proficiencies.bonus).toBe(2);
   });
 
-  it('Should be able to add a skill proficiency', () => {
-    testCharacter.addProficiency('skills', 'acrobatics');
+  it('Should be able to add any proficiency', () => {
+    testCharacter.addProficiency('skills', ['acrobatics']);
+    testCharacter.addProficiency('armor', ['light armor']);
+    testCharacter.addProficiency('savingThrows', ['dexterity']);
+    expect(testCharacter.proficiencies.armor).toContain('light armor');
     expect(testCharacter.proficiencies.skills).toContain('acrobatics');
   });
 
-  it('Should be able to add many armor proficiencies', () => {
-    testCharacter.addProficiency('armor', 'light armor');
-    testCharacter.addProficiency('armor', 'heavy armor');
-    expect(testCharacter.proficiencies.armor).toContain('light armor');
-    expect(testCharacter.proficiencies.armor).toContain('heavy armor');
+  it('Should be able to add many proficiencies at once', () => {
+    testCharacter.addProficiency('skills', ['acrobatics', 'athletics', 'deception']);
+    expect(testCharacter.proficiencies.skills).toContain('acrobatics');
+    expect(testCharacter.proficiencies.skills).toContain('athletics');
+    expect(testCharacter.proficiencies.skills).toContain('deception');
   });
-
 });
