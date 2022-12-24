@@ -50,6 +50,17 @@ export interface Stats {
   wisdom?: number;
   charisma?: number;
 }
+
+/**
+ * Things a character is good at
+ *
+ * @property {string[]} armor Armor that the character knows how to wear effectively
+ * @property {string[]} weapons Weapons that the characters knows how to use effectively
+ * @property {string[]} tools Tools that the character knows how to use effectively
+ * @property {string[]} savingThrows Things that the character is good at evading or resisting
+ * @property {string[]} skills Skills that the character is good at
+ *
+ */
 export interface Proficiencies {
   armor: string[];
   weapons: string[];
