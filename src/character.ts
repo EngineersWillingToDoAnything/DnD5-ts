@@ -11,6 +11,14 @@ interface CharStats extends Stats {
   assignablePoints: number;
 }
 
+/**
+ * @description The basic information about a character
+ * @property {string} name The name of the character
+ * @property {number} level The level of the character
+ * @property {HP} healthPoints The health points of the character (max and current)
+ * @property {Alignment} alignment The ideology of the character
+ * @property {Stats} stats The stats of the character
+ */
 interface ICharacter {
   readonly name: string;
 
@@ -24,6 +32,7 @@ interface ICharacter {
 /**
  * @classdesc Represent a D&D character
  *
+ * @implements ICharacter
  * @export
  * @default
  */
@@ -37,10 +46,10 @@ export default class Character implements ICharacter {
 
   /**
    * Create a new DnD character
-   * @param name The name of the character
+   * @param data The possible information about the character
    */
-  constructor(data?: ICharacter) {
-    if (data?.name) this.name = data.name;
+  constructor(data: ICharacter) {
+    this.name = data.name;
     if (data?.level) this.level = data.level;
     if (data?.healthPoints) this.healthPoints = data.healthPoints;
     if (data?.alignment) this.alignment = data.alignment;

@@ -152,6 +152,7 @@ describe ('Character language system', () => {
   });
 });
 
+
 describe ('Character stats system', () => {
   it ('Should be able to add points to a stat', () => {
     testCharacter.addPointsToStat('strength', 1);
@@ -223,5 +224,82 @@ describe ('Character stats system', () => {
   it ('Should not be able to remove negative points from a stat', () => {
     expect(() => testCharacter.removePointsFromStat('strength', -1)).toThrow(StatError);
     expect(() => testCharacter.removePointsFromStat('strength', -1)).toThrow(StatError.getMessage(4));
+  });
+});
+
+
+describe ('Character constructor with parameters', () => {
+  it ('Should be able to create with a name', () => {
+    const otherCharacter = new Character({ name: 'Frank Sinatra' });
+    expect(otherCharacter.name).toBe('Frank Sinatra');
+  });
+
+  it ('Should be able to create with a specific level', () => {
+    const otherCharacter = new Character({ name: 'Michael Scott', level: 5 });
+    expect(otherCharacter.level).toBe(5);
+  });
+
+  it ('Should be able to create with a custom aligment', () => {
+    const otherCharacter = new Character({
+      name: 'Rick Sanchez',
+      alignment: {
+        ethical: 'Chaotic',
+        moral: 'Good'
+      }
+    });
+    expect(otherCharacter.alignment.ethical).toBe('Chaotic');
+    expect(otherCharacter.alignment.moral).toBe('Good');
+  });
+
+  it ('Should be able to create with more than one language', () => {
+    const otherCharacter = new Character({
+      name: 'Legolas',
+      languages: ['Elvish', 'Dwarvish']
+    });
+    expect(otherCharacter.knowsLanguage('Elvish')).toBe(true);
+    expect(otherCharacter.knowsLanguage('Dwarvish')).toBe(true);
+    expect(otherCharacter.languagesKnown()).toHaveLength(3); // Common + 3 new languages
+  });
+
+  it ('Should be able to create with a custom health', () => {
+    const otherCharacter = new Character({
+      name: 'Darth Vader',
+      healthPoints: {
+        max: 100,
+        current: 50
+      }
+    });
+    expect(otherCharacter.healthPoints.current).toBe(50);
+    expect(otherCharacter.healthPoints.max).toBe(100);
+  });
+
+  describe ('Character constructor with custom stats', () => {
+    it ('Should be able to create with custom stat values', () => {
+      const otherCharacter = new Character({
+        name: 'Ash Ketchum',
+        stats: {
+          strength: 10,
+          charisma: 4,
+          dexterity: 15
+        }
+      });
+      expect(otherCharacter.stats.strength).toBe(10);
+      expect(otherCharacter.stats.charisma).toBe(4);
+      expect(otherCharacter.stats.dexterity).toBe(15);
+      expect(otherCharacter.stats.assignablePoints).toBe(22);
+    });
+
+    it ('Should not change the stats that are not specified', () => {
+      const otherCharacter = new Character({
+        name: 'Juan Jose Jose',
+        stats: {
+          strength: 10,
+          charisma: 4,
+        }
+      });
+      expect(otherCharacter.stats.constitution).toBe(8);
+      expect(otherCharacter.stats.intelligence).toBe(8);
+      expect(otherCharacter.stats.wisdom).toBe(8);
+    });
   });
 });
