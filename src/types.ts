@@ -14,12 +14,12 @@ export type Language = 'Common' | 'Elvish' | 'Dwarvish' | 'Infernal';
 /**
  * The ethical alignment of a character
  */
-export type Ethical = 'Lawful' | 'Neutral' | 'Chaotic';
+type Ethical = 'Lawful' | 'Neutral' | 'Chaotic';
 
 /**
  * The moral alignment of a character
  */
-export type Moral = 'Good' | 'Neutral' | 'Evil';
+type Moral = 'Good' | 'Neutral' | 'Evil';
 
 /**
  * The alignment of a character
@@ -57,7 +57,7 @@ export interface Stats {
  * @property {string[]} armor Armor that the character knows how to wear effectively
  * @property {string[]} weapons Weapons that the characters knows how to use effectively
  * @property {string[]} tools Tools that the character knows how to use effectively
- * @property {string[]} savingThrows Things that the character is good at evading or resisting
+ * @property {keyof Stats[]} savingThrows Things that the character is good at evading or resisting
  * @property {string[]} skills Skills that the character is good at
  *
  */

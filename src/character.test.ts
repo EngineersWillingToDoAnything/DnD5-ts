@@ -261,7 +261,7 @@ describe ('Character constructor with parameters', () => {
     expect(otherCharacter.level).toBe(5);
   });
 
-  it ('Should be able to create with a custom aligment', () => {
+  it ('Should be able to create with a custom alignment', () => {
     const otherCharacter = new Character({
       name: 'Rick Sanchez',
       alignment: {
