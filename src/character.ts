@@ -97,7 +97,7 @@ export default class Character implements ICharacter {
   }
 
   /**
-   * @brief Recieve a certain amount of damage
+   * @brief Receive a certain amount of damage
    *
    * @param damage The amount of damage to take
    */
@@ -217,11 +217,9 @@ export default class Character implements ICharacter {
    * @param proficiencyType The proficiency type to add
    * @param proficiency The specific proficiency to add
    */
-  public addProficiency(proficiencyType: keyof Proficiencies, proficiency: (string | keyof Stats)[]) {
-    if (proficiencyType === 'savingThrows') {
-      this.proficiencies[proficiencyType].push(...proficiency as (keyof Stats)[]);
-      return;
-    }
-    this.proficiencies[proficiencyType].push(...proficiency);
+  public addProficiency<T extends keyof Proficiencies, V extends Proficiencies[T]> (
+    proficiencyType: T, proficiency: V
+    ) {
+    this.proficiencies[proficiencyType].push(...proficiency as never[]);
   }
 }
