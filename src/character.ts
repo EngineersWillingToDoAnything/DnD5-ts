@@ -1,5 +1,5 @@
 import type { Alignment, HP, Language, Stats, Proficiencies } from "./types";
-import { StatError } from "./errors";
+import StatError from "./errors/stat_error";
 
 /**
  * @description The stats of a character

@@ -4,7 +4,7 @@
  * @extends Error
  * @export
  */
-export class StatError extends Error {
+export default class StatError extends Error {
   /**
    * All the possible messages
    */
