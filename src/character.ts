@@ -12,16 +12,6 @@ interface CharStats extends Stats {
 }
 
 /**
- * @description The proficiencies of a character with the bonus they get from them
- * @property {number} bonus The modifier to add to the rolls with proficiencies
- *
- * @extends Proficiencies
- */
-interface ProfAndBonus extends Proficiencies {
-  bonus: number;
-}
-
-/**
  * @description The basic information about a character
  * @property {string} name The name of the character
  * @property {number} level The level of the character
@@ -38,7 +28,6 @@ interface ICharacter {
   readonly alignment?: Alignment;
   readonly stats?: Stats;
   readonly languages?: Language[];
-  readonly proficiencies?: Proficiencies;
 }
 
 /**
@@ -55,7 +44,14 @@ export default class Character implements ICharacter {
   public readonly alignment: Alignment = { ethical: 'Neutral', moral: 'Neutral' };
   public readonly languages: Language[] = ['Common'];
   public readonly stats: CharStats;
-  public readonly proficiencies: ProfAndBonus;
+  public proficiencyBonus = 2;
+  public readonly proficiencies: Proficiencies = {
+    armor: [],
+    weapons: [],
+    tools: [],
+    savingThrows: [],
+    skills: [],
+  };
 
   /**
    * Create a new DnD character
@@ -84,15 +80,6 @@ export default class Character implements ICharacter {
         this.removePointsFromStat(stat as keyof Stats, 8);
         this.addPointsToStat(stat as keyof Stats, data.stats[stat as keyof Stats] as number);
       }
-    }
-
-    this.proficiencies = {
-      bonus: 2,
-      armor: [],
-      weapons: [],
-      tools: [],
-      savingThrows: [],
-      skills: []
     }
   }
 
@@ -214,12 +201,11 @@ export default class Character implements ICharacter {
 
   /**
    * @brief Add a proficiency to the character
-   * @param proficiencyType The proficiency type to add
+   * @param proficiencyType The type of the proficiency (armor, weapons, tools, savingThrows, skills)
    * @param proficiency The specific proficiency to add
    */
-  public addProficiency<T extends keyof Proficiencies, V extends Proficiencies[T]> (
-    proficiencyType: T, proficiency: V
-    ) {
-    this.proficiencies[proficiencyType].push(...proficiency as never[]);
+  public addProficiency <T extends keyof Proficiencies> (
+    proficiencyType: T, proficiency: Proficiencies[T]) {
+    this.proficiencies[proficiencyType].push(...proficiency);
   }
 }
