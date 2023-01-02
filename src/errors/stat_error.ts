@@ -22,8 +22,8 @@ export default class StatError extends Error {
    *
    * @param opcode The opcode of the message
    */
-  constructor(opcode: number) {
-    if (opcode < 0 || opcode >= StatError.messages.length) super('Unknown error');
+  constructor(opcode: number = -1) {
+    if (opcode < 0 || opcode >= StatError.messages.length) super('Unknown stat error');
     else super(StatError.messages[opcode]);
     this.name = 'StatError';
   }
