@@ -1,5 +1,5 @@
-import Character from './character';
-import StatError from "./errors/stat_error";
+import Character from '../src/character';
+import StatError from '../src/errors/stat_error';
 
 let testCharacter: Character;
 beforeAll (() => {
