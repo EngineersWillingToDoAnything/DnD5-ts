@@ -1,4 +1,4 @@
-import StatError from '../src/errors/stat_error';
+import StatError from '@/errors/stat_error';
 
 describe.each([
   { name: 'StatError', ErrorClass: StatError },
@@ -18,7 +18,7 @@ describe.each([
 });
 
 describe ('StatError', () => {
-  it ('Should throw an unknown "error message" if the opcode is not define', () => {
+  it ('Should throw an unknown "error message" if the opcode is not in limits', () => {
     expect(() => { throw new StatError(6) }).toThrow('Unknown stat error');
     expect(() => { throw new StatError(-1) }).toThrow('Unknown stat error');
   });

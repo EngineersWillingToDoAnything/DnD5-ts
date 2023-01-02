@@ -2,6 +2,9 @@
 import type { Config } from 'jest';
 
 const config: Config = {
+  moduleNameMapper: {          // A map from regular expressions to module names easily
+    '^@/errors/(.*)$': '<rootDir>/src/errors/$1',
+  },
   coverageThreshold: {
     global: {
       lines: 80
