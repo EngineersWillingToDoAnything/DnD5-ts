@@ -63,7 +63,7 @@ export default class Character implements ICharacter {
   public readonly stats: CharStats;
   public readonly proficiencies: ProfAndBonus;
   public speed: number = 0;
-  public size: Size = 'Tiny';
+  public size: Size = 'Medium';
 
   /**
    * Create a new DnD character

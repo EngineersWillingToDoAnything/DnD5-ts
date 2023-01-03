@@ -94,6 +94,16 @@ describe ('Character properties tests', () => {
       expect(testCharacter.proficiencies.bonus).toBe(2);
     });
   });
+
+  it ('Should have a speed of 0', () => {
+    expect(testCharacter).toHaveProperty('speed');
+    expect(testCharacter.speed).toBe(0);
+  });
+
+  it ('Should have a size of "Medium"', () => {
+    expect(testCharacter).toHaveProperty('size');
+    expect(testCharacter.size).toBe('Medium');
+  });
 });
 
 describe ('Character health system', () => {
