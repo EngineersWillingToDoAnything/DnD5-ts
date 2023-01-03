@@ -68,3 +68,24 @@ export interface Proficiencies {
   savingThrows: (keyof Stats)[];
   skills: string[];
 }
+
+/**
+ * @enum {string} The possible sizes of a creature
+ * @readonly
+ */
+const Sizes = {
+  Tiny: 'Tiny',
+  Small: 'Small',
+  Medium: 'Medium',
+  Large: 'Large',
+  Huge: 'Huge',
+  Gargantuan: 'Gargantuan',
+} as const;
+
+/**
+ * A type version of the 'Sizes' used to make sure that the size is one of the
+ * possible sizes.
+ *
+ * @memberof Sizes
+ */
+export type Size = typeof Sizes[keyof typeof Sizes];

@@ -1,4 +1,4 @@
-import type { Alignment, HP, Language, Stats, Proficiencies } from "./types";
+import type { Alignment, HP, Language, Stats, Proficiencies, Size } from "./types";
 import StatError from "./errors/stat_error";
 
 /**
@@ -29,8 +29,10 @@ interface ProfAndBonus extends Proficiencies {
  * @property {Alignment} alignment The ideology of the character
  * @property {Stats} stats The stats of the character
  * @property {Proficiencies} proficiencies The things that the character is good at
+ * @property {number} speed Capacity of movement available (given by the race)
+ * @property {Size} size The size of the character (given by the race)
  */
-interface ICharacter {
+export interface ICharacter {
   readonly name: string;
 
   level?: number;
@@ -38,7 +40,11 @@ interface ICharacter {
   readonly alignment?: Alignment;
   readonly stats?: Stats;
   readonly languages?: Language[];
+
+  // Will be assigned when selecting class, race, etc.
   readonly proficiencies?: Proficiencies;
+  speed?: number;
+  size?: Size;
 }
 
 /**
@@ -56,6 +62,8 @@ export default class Character implements ICharacter {
   public readonly languages: Language[] = ['Common'];
   public readonly stats: CharStats;
   public readonly proficiencies: ProfAndBonus;
+  public speed: number = 0;
+  public size: Size = 'Tiny';
 
   /**
    * Create a new DnD character
