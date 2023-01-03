@@ -90,8 +90,8 @@ describe ('Character properties tests', () => {
     });
 
     it ('Should have a proficiency bonus of 2', () => {
-      expect(testCharacter.proficiencies).toHaveProperty('bonus');
-      expect(testCharacter.proficiencies.bonus).toBe(2);
+      expect(testCharacter).toHaveProperty('proficiencyBonus');
+      expect(testCharacter.proficiencyBonus).toBe(2);
     });
   });
 
@@ -338,7 +338,7 @@ describe ('Character constructor with parameters', () => {
 
 describe ('Character proficiency system', () => {
   it('Should have a proficiency bonus', () => {
-    expect(testCharacter.proficiencies.bonus).toBe(2);
+    expect(testCharacter.proficiencyBonus).toBe(2);
   });
 
   it('Should be able to add any proficiency', () => {

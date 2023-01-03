@@ -52,6 +52,23 @@ export interface Stats {
 }
 
 /**
+ * Type of each proficiency
+ *
+ * @property {string} armor
+ * @property {string} weapons
+ * @property {string} tools
+ * @property {keyof Stats} savingThrows
+ * @property {string} skills
+ */
+interface ProficiencyTypes {
+  armor: string;
+  weapons: string;
+  tools: string;
+  savingThrows: keyof Stats;
+  skills: string;
+}
+
+/**
  * Things a character is good at
  *
  * @property {string[]} armor Armor that the character knows how to wear effectively
@@ -61,12 +78,8 @@ export interface Stats {
  * @property {string[]} skills Skills that the character is good at
  *
  */
-export interface Proficiencies {
-  armor: string[];
-  weapons: string[];
-  tools: string[];
-  savingThrows: (keyof Stats)[];
-  skills: string[];
+export type Proficiencies = {
+  [Key in keyof ProficiencyTypes]: ProficiencyTypes[Key][];
 }
 
 /**
