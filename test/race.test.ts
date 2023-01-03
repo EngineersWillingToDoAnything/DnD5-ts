@@ -1,5 +1,4 @@
 import Race from '../src/race';
-import { ICharacter } from 'src/character';
 
 // Since it's an abstract class, we need to create a child class to test it
 class RaceTested extends Race {};
@@ -27,22 +26,6 @@ describe ('Race properties tests', () => {
   it ('Should have a size', () => {
     expect(raceTested).toHaveProperty('size');
     expect(typeof raceTested.size).toBe('string');
-  });
-});
-
-describe ('Assignation of properties to a character', () => {
-  it ('Should assign the speed', () => {
-    const character: ICharacter = { name: 'Bon Jovi' };
-
-    raceTested.assignTo(character);
-    expect(character.speed).toBe(raceTested.speed);
-  });
-
-  it ('Should assign the size', () => {
-    const character: ICharacter = { name: 'Elton John' };
-
-    raceTested.assignTo(character);
-    expect(character.size).toBe(raceTested.size);
   });
 });
 

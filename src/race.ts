@@ -1,4 +1,3 @@
-import type { ICharacter } from './character';
 import type { Size } from './types';
 
 /**
@@ -34,15 +33,5 @@ export default abstract class Race implements IRace {
     if (data.speed < 0) throw new Error('The speed of the race cannot be negative');
     this.speed = data.speed;
     this.size = data.size;
-  }
-
-  /**
-   * @brief Assign all the race properties to the character
-   *
-   * @param character The character to modify
-   */
-  public assignTo(character: ICharacter): void {
-    character.speed = this.speed;
-    character.size = this.size;
   }
 }

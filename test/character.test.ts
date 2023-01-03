@@ -1,5 +1,8 @@
 import Character from '../src/character';
+
 import StatError from '@/errors/stat_error';
+import Human from '../src/races/human';
+import type { IRace } from '../src/race';
 
 let testCharacter: Character;
 beforeAll (() => {
@@ -334,6 +337,18 @@ describe ('Character constructor with parameters', () => {
       expect(otherCharacter.stats.wisdom).toBe(8);
     });
   });
+
+  it ('Should be able to create with a race associated', () => {
+    const otherCharacter = new Character({
+      name: 'Freddy Mercury',
+      race: new Human()
+    });
+    const regularHuman = new Human();
+
+    expect(otherCharacter.raceName).toBe(regularHuman.name);
+    expect(otherCharacter.speed).toBe(regularHuman.speed);
+    expect(otherCharacter.size).toBe(regularHuman.size);
+  });
 });
 
 describe ('Character proficiency system', () => {
@@ -354,5 +369,17 @@ describe ('Character proficiency system', () => {
     expect(testCharacter.proficiencies.skills).toContain('acrobatics');
     expect(testCharacter.proficiencies.skills).toContain('athletics');
     expect(testCharacter.proficiencies.skills).toContain('deception');
+  });
+});
+
+
+describe ('Assignation of properties from a race', () => {
+  it ('Should assign the features coming from the race ', () => {
+    const race: IRace = { name: 'Human', speed: 30, size: 'Medium' };
+
+    testCharacter.assignRace(race);
+    expect(testCharacter.speed).toBe(30);
+    expect(testCharacter.size).toBe('Medium');
+    expect(testCharacter.raceName).toBe('Human');
   });
 });

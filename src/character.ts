@@ -1,5 +1,6 @@
 import type { Alignment, HP, Language, Stats, Proficiencies, Size } from "./types";
 import StatError from "./errors/stat_error";
+import type { IRace } from "./race";
 
 /**
  * @description The stats of a character
@@ -18,6 +19,7 @@ interface CharStats extends Stats {
  * @property {HP} healthPoints The health points of the character (max and current)
  * @property {Alignment} alignment The ideology of the character
  * @property {Stats} stats The stats of the character
+ * @property {IRace} race A race object alike
  * @property {Proficiencies} proficiencies The things that the character is good at
  * @property {number} speed Capacity of movement available (given by the race)
  * @property {Size} size The size of the character (given by the race)
@@ -30,6 +32,7 @@ export interface ICharacter {
   readonly alignment?: Alignment;
   readonly stats?: Stats;
   readonly languages?: Language[];
+  race?: IRace;
 
   // Will be assigned when selecting class, race, etc.
   readonly proficiencies?: Proficiencies;
@@ -61,6 +64,7 @@ export default class Character implements ICharacter {
   };
   public speed: number = 0;
   public size: Size = 'Medium';
+  public raceName: string = '';
 
   /**
    * Create a new DnD character
@@ -90,6 +94,7 @@ export default class Character implements ICharacter {
         this.addPointsToStat(stat as keyof Stats, data.stats[stat as keyof Stats] as number);
       }
     }
+    if (data?.race) this.assignRace(data.race);
   }
 
   /**
@@ -216,5 +221,16 @@ export default class Character implements ICharacter {
   public addProficiency <T extends keyof Proficiencies> (
     proficiencyType: T, proficiency: Proficiencies[T]) {
     this.proficiencies[proficiencyType].push(...proficiency);
+  }
+
+  /**
+   * @brief Assign a race to the character
+   *
+   * @param race The race to get the values from
+   */
+  public assignRace (race: IRace): void {
+    this.raceName = race.name;
+    this.size = race.size;
+    this.speed = race.speed;
   }
 }
