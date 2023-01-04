@@ -2,6 +2,16 @@
 - Alejandro Suárez Martín (_tbw4530@gmail.com_)
 - Gian Luis Bolívar Diana (_gianluisbolivar1@gmail.com_)
 
+## Directory structure
+```
+  .
+  ├── docs                      # The change logs
+  ├── src                       # API implementation
+  │   ├── errors                    # Custom errors definition
+  │   └── races                     # All character races definition
+  └── test                      # To test the modules
+```
+
 ## References
 - [DnD Wiki](http://dnd5e.wikidot.com/)
 - [GitHub repository](https://github.com/EngineersWillingToDoAnything/DnD5-js)
