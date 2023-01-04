@@ -1,4 +1,4 @@
-import type { Size } from './types';
+import type { Size, Stats } from './types';
 
 /**
  * @description The basic information about a Race
@@ -6,11 +6,13 @@ import type { Size } from './types';
  * @property {string} name The race's name
  * @property {number} speed Capacity of movement available for the race
  * @property {Size} size The average size of an specimen of the race
+ * @property {Stas} extraStatsPoints The amount of extra points to stats that gives the race
  */
 export interface IRace {
   readonly name: string;
   readonly speed: number;
   readonly size: Size;
+  readonly extraStatsPoints: Stats;
 }
 
 /**
@@ -23,6 +25,7 @@ export default abstract class Race implements IRace {
   public readonly name: string;
   public readonly speed: number;
   public readonly size: Size;
+  public readonly extraStatsPoints: Stats = {};
 
   /**
    * Initialize the general values of the race
@@ -33,5 +36,8 @@ export default abstract class Race implements IRace {
     if (data.speed < 0) throw new Error('The speed of the race cannot be negative');
     this.speed = data.speed;
     this.size = data.size;
+    for (const stat in data.extraStatsPoints) {
+      this.extraStatsPoints[stat as keyof Stats] = data.extraStatsPoints[stat as keyof Stats];
+    }
   }
 }

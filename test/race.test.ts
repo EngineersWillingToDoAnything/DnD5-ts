@@ -9,6 +9,7 @@ beforeAll(() => {
     name: 'Tested',
     speed: 30,
     size: 'Medium',
+    extraStatsPoints: {}
   });
 });
 
@@ -27,6 +28,16 @@ describe ('Race properties tests', () => {
     expect(raceTested).toHaveProperty('size');
     expect(typeof raceTested.size).toBe('string');
   });
+
+  describe ('Extra stats points', () => {
+    it ('Should be able to have extra stats points', () => {
+      expect(raceTested).toHaveProperty('extraStatsPoints');
+    });
+
+    it ('Should start with an empty stat object by default', () => {
+      expect(raceTested.extraStatsPoints).toEqual({});
+    });
+  });
 });
 
 describe ('Parameters given at constructor', () => {
@@ -35,6 +46,7 @@ describe ('Parameters given at constructor', () => {
       name: 'KissFan',
       speed: 45,
       size: 'Large',
+      extraStatsPoints: {}
     });
     expect(otherRaceTested.name).toBe('KissFan');
     expect(otherRaceTested.speed).toBe(45);
@@ -42,6 +54,28 @@ describe ('Parameters given at constructor', () => {
   });
 
   it ('Should not have a negative speed', () => {
-    expect(() => { new RaceTested({ name: 'Tested', speed: -1, size: 'Medium' }) }).toThrowError('The speed of the race cannot be negative');
+    expect(() => { new RaceTested({
+      name: 'Tested',
+      speed: -1,
+      size: 'Medium',
+      extraStatsPoints: {} }) }).toThrowError('The speed of the race cannot be negative');
+  });
+
+  it ('Should be able ot provide extra stats points', () => {
+    const otherRaceTested = new RaceTested({
+      name: 'Reptilian',
+      speed: 43,
+      size: 'Small',
+      extraStatsPoints: {
+        strength: 1,
+        dexterity: 1,
+        constitution: 2,
+      }
+    });
+    expect(otherRaceTested.extraStatsPoints).toEqual({
+      strength: 1,
+      dexterity: 1,
+      constitution: 2
+    });
   });
 });

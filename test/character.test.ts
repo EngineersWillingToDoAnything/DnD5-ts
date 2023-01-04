@@ -372,14 +372,31 @@ describe ('Character proficiency system', () => {
   });
 });
 
-
 describe ('Assignation of properties from a race', () => {
   it ('Should assign the features coming from the race ', () => {
-    const race: IRace = { name: 'Human', speed: 30, size: 'Medium' };
+    const race: IRace = { name: 'Human', speed: 30, size: 'Medium', extraStatsPoints: {} };
 
     testCharacter.assignRace(race);
     expect(testCharacter.speed).toBe(30);
     expect(testCharacter.size).toBe('Medium');
     expect(testCharacter.raceName).toBe('Human');
+  });
+
+  it ('Should assign the extra stats points coming from the race', () => {
+    const otherCharacter = new Character({
+      name: 'Michael Jackson',
+      race: new Human()
+    });
+
+    // Human adds 1 point to all stats
+    expect(otherCharacter.stats).toEqual({
+      strength: 9,
+      dexterity: 9,
+      constitution: 9,
+      intelligence: 9,
+      wisdom: 9,
+      charisma: 9,
+      assignablePoints: 27
+    });
   });
 });

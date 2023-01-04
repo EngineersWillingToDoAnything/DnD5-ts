@@ -232,5 +232,15 @@ export default class Character implements ICharacter {
     this.raceName = race.name;
     this.size = race.size;
     this.speed = race.speed;
+    if (race.extraStatsPoints) {
+      for (const stat in race.extraStatsPoints) {
+        // In case it add points just like the constructor
+        // this.addPointsToStat(stat as keyof Stats, race.extraStatsPoints[stat as keyof Stats] as number);
+
+        // In case it adds points to the base stats
+        const statValue = this.stats[stat as keyof Stats] as number;
+        this.stats[stat as keyof Stats] = statValue + (race.extraStatsPoints[stat as keyof Stats] as number);
+      }
+    }
   }
 }
