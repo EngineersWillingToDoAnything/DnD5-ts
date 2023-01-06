@@ -1,4 +1,4 @@
-import type { Size, Stats } from './types';
+import type { Size, Stats, Abilities } from './types';
 
 /**
  * @description The basic information about a Race
@@ -13,6 +13,7 @@ export interface IRace {
   readonly speed: number;
   readonly size: Size;
   readonly extraStatsPoints: Stats;
+  readonly abilities?: Abilities;
 }
 
 /**
@@ -26,6 +27,7 @@ export default abstract class Race implements IRace {
   public readonly speed: number;
   public readonly size: Size;
   public readonly extraStatsPoints: Stats = {};
+  public readonly abilities: Abilities = {};
 
   /**
    * Initialize the general values of the race
@@ -37,5 +39,6 @@ export default abstract class Race implements IRace {
     this.speed = data.speed;
     this.size = data.size;
     Object.assign(this.extraStatsPoints, data.extraStatsPoints);
+    Object.assign(this.abilities, data.abilities);
   }
 }

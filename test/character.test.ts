@@ -3,6 +3,7 @@ import Character from '../src/character';
 import StatError from '@/errors/stat_error';
 import Human from '../src/races/human';
 import type { IRace } from '../src/race';
+import { Ability } from 'src/types';
 
 let testCharacter: Character;
 beforeAll (() => {
@@ -106,6 +107,11 @@ describe ('Character properties tests', () => {
   it ('Should have a size of "Medium"', () => {
     expect(testCharacter).toHaveProperty('size');
     expect(testCharacter.size).toBe('Medium');
+  });
+
+  it ('Should not come with any ability', () => {
+    expect(testCharacter).toHaveProperty('abilities');
+    expect(testCharacter.abilities).toEqual({});
   });
 });
 
@@ -374,12 +380,13 @@ describe ('Character proficiency system', () => {
 
 describe ('Assignation of properties from a race', () => {
   it ('Should assign the features coming from the race ', () => {
+    const otherCharacter = new Character({ name: 'Damiano David' });
     const race: IRace = { name: 'Human', speed: 30, size: 'Medium', extraStatsPoints: {} };
 
-    testCharacter.assignRace(race);
-    expect(testCharacter.speed).toBe(30);
-    expect(testCharacter.size).toBe('Medium');
-    expect(testCharacter.raceName).toBe('Human');
+    otherCharacter.assignRace(race);
+    expect(otherCharacter.speed).toBe(30);
+    expect(otherCharacter.size).toBe('Medium');
+    expect(otherCharacter.raceName).toBe('Human');
   });
 
   it ('Should assign the extra stats points coming from the race', () => {
@@ -398,5 +405,24 @@ describe ('Assignation of properties from a race', () => {
       charisma: 9,
       assignablePoints: 27
     });
+  });
+
+  it ('Should assign the abilities related to the race', () => {
+    const otherCharacter = new Character({ name: 'Oliver Sykes' });
+    const darkVision: Ability = {
+      description: "You can see in the dark up to 60 feet"
+    }
+    const raceToTest: IRace = {
+      name: 'Programmer',
+      speed: 30,
+      size: 'Medium',
+      extraStatsPoints: {},
+      abilities: {
+        darkVision
+      }
+    };
+
+    otherCharacter.assignRace(raceToTest);
+    expect(otherCharacter.abilities).toEqual({ darkVision });
   });
 });

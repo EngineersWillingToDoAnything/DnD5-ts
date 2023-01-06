@@ -102,3 +102,26 @@ const Sizes = {
  * @memberof Sizes
  */
 export type Size = typeof Sizes[keyof typeof Sizes];
+
+/**
+ * An active or passive skill of a creature.
+ *
+ * @property {string} description A description of the ability.
+ */
+export interface Ability {
+  description: string;
+}
+
+/**
+ * A collection of abilities.
+ *
+ * @property {Ability} [key] The ability with the key as name.
+ * @example
+ * {
+ *  'Flying': {
+ *    description: 'The creature can fly'
+ * }
+ */
+export type Abilities = {
+  [key: string]: Ability;
+}

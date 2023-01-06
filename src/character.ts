@@ -1,4 +1,4 @@
-import type { Alignment, HP, Language, Stats, Proficiencies, Size } from "./types";
+import type { Alignment, HP, Language, Stats, Proficiencies, Size, Abilities } from "./types";
 import StatError from "./errors/stat_error";
 import type { IRace } from "./race";
 
@@ -14,6 +14,7 @@ interface CharStats extends Stats {
 
 /**
  * @description The basic information about a character
+ *
  * @property {string} name The name of the character
  * @property {number} level The level of the character
  * @property {HP} healthPoints The health points of the character (max and current)
@@ -23,6 +24,9 @@ interface CharStats extends Stats {
  * @property {Proficiencies} proficiencies The things that the character is good at
  * @property {number} speed Capacity of movement available (given by the race)
  * @property {Size} size The size of the character (given by the race)
+ * @property {Abilities} abilities The actives and passives of the character
+ *
+ * @export
  */
 export interface ICharacter {
   readonly name: string;
@@ -38,6 +42,7 @@ export interface ICharacter {
   readonly proficiencies?: Proficiencies;
   speed?: number;
   size?: Size;
+  readonly abilities?: Abilities;
 }
 
 /**
@@ -65,6 +70,7 @@ export default class Character implements ICharacter {
   public speed: number = 0;
   public size: Size = 'Medium';
   public raceName: string = '';
+  public readonly abilities: Abilities = {};
 
   /**
    * Create a new DnD character
@@ -242,5 +248,6 @@ export default class Character implements ICharacter {
         this.stats[stat as keyof Stats] = statValue + (race.extraStatsPoints[stat as keyof Stats] as number);
       }
     }
+    Object.assign(this.abilities, race.abilities);
   }
 }

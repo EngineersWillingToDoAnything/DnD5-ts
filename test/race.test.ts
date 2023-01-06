@@ -1,5 +1,7 @@
 import Race from '../src/race';
 
+import { Ability } from 'src/types';
+
 // Since it's an abstract class, we need to create a child class to test it
 class RaceTested extends Race {};
 let raceTested: Race;
@@ -38,6 +40,16 @@ describe ('Race properties tests', () => {
       expect(raceTested.extraStatsPoints).toEqual({});
     });
   });
+
+  describe ('Abilities', () => {
+    it ('Should be able to have abilities', () => {
+      expect(raceTested).toHaveProperty('abilities');
+    });
+
+    it ('Should start with an empty abilities object by default', () => {
+      expect(raceTested.abilities).toEqual({});
+    });
+  });
 });
 
 describe ('Parameters given at constructor', () => {
@@ -61,7 +73,7 @@ describe ('Parameters given at constructor', () => {
       extraStatsPoints: {} }) }).toThrowError('The speed of the race cannot be negative');
   });
 
-  it ('Should be able ot provide extra stats points', () => {
+  it ('Should be able to provide extra stats points', () => {
     const otherRaceTested = new RaceTested({
       name: 'Reptilian',
       speed: 43,
@@ -77,5 +89,21 @@ describe ('Parameters given at constructor', () => {
       dexterity: 1,
       constitution: 2
     });
+  });
+
+  it ('Should be able to provide abilities related to the race', () => {
+    const menacing: Ability = {
+      description: 'You gain proficiency in the Intimidation skill.',
+    }
+    const otherRaceTested = new RaceTested({
+      name: 'Android',
+      speed: 50,
+      size: 'Huge',
+      extraStatsPoints: {},
+      abilities: {
+        menacing
+      }
+    });
+    expect(otherRaceTested.abilities).toEqual({ menacing });
   });
 });
