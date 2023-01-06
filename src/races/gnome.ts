@@ -1,5 +1,7 @@
 import Race from '../race';
 
+import { darkVision, gnomeCunning } from './race_abilities';
+
 /**
  * @classdesc Represents a race with the Gnome attributes
  *
@@ -18,6 +20,10 @@ export default class Gnome extends Race {
       size: 'Small',
       extraStatsPoints: {
         intelligence: 2,
+      },
+      abilities: {
+        darkVision,
+        gnomeCunning,
       },
     });
   }

@@ -1,5 +1,7 @@
 import Race from '../race';
 
+import { lucky, brave, nimble } from './race_abilities';
+
 /**
  * @classdesc Represents a race with the Halfling attributes
  *
@@ -19,6 +21,11 @@ export default class Halfling extends Race {
       extraStatsPoints: {
         dexterity: 2
       },
+      abilities: {
+        lucky,
+        brave,
+        nimble
+      }
     });
   }
 }

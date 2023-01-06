@@ -1,5 +1,7 @@
 import Race from '../race';
 
+import { extraLanguage } from './race_abilities';
+
 /**
  * @classdesc Represents a race with the human attributes
  *
@@ -23,6 +25,9 @@ export default class Human extends Race {
         intelligence: 1,
         wisdom: 1,
         charisma: 1,
+      },
+      abilities: {
+        extraLanguage,
       },
     });
   }
