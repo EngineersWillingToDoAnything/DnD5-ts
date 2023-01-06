@@ -36,8 +36,6 @@ export default abstract class Race implements IRace {
     if (data.speed < 0) throw new Error('The speed of the race cannot be negative');
     this.speed = data.speed;
     this.size = data.size;
-    for (const stat in data.extraStatsPoints) {
-      this.extraStatsPoints[stat as keyof Stats] = data.extraStatsPoints[stat as keyof Stats];
-    }
+    Object.assign(this.extraStatsPoints, data.extraStatsPoints);
   }
 }
