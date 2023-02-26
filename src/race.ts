@@ -2,17 +2,17 @@ import type { Size, Stats, Abilities } from './types';
 
 /**
  * @description The basic information about a Race
- *
- * @property {string} name The race's name
- * @property {number} speed Capacity of movement available for the race
- * @property {Size} size The average size of an specimen of the race
- * @property {Stas} extraStatsPoints The amount of extra points to stats that gives the race
  */
 export interface IRace {
+  /** The race's name */
   readonly name: string;
+  /** Capacity of movement available for the race */
   readonly speed: number;
+  /** The average size of an specimen of the race */
   readonly size: Size;
+  /** The amount of extra points to stats that gives the race */
   readonly extraStatsPoints: Stats;
+  /** The actives and passives of the race */
   readonly abilities?: Abilities;
 }
 

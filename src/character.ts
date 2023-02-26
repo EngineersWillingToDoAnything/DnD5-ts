@@ -4,51 +4,46 @@ import type { IRace } from "./race";
 
 /**
  * @description The stats of a character
- * @property {number} assignablePoints The number of points that can be assigned to the stats
- *
- * @extends Stats
  */
 interface CharStats extends Stats {
+  /** The number of points that can be assigned to the stats */
   assignablePoints: number;
 }
 
 /**
  * @description The basic information about a character
- *
- * @property {string} name The name of the character
- * @property {number} level The level of the character
- * @property {HP} healthPoints The health points of the character (max and current)
- * @property {Alignment} alignment The ideology of the character
- * @property {Stats} stats The stats of the character
- * @property {IRace} race A race object alike
- * @property {Proficiencies} proficiencies The things that the character is good at
- * @property {number} speed Capacity of movement available (given by the race)
- * @property {Size} size The size of the character (given by the race)
- * @property {Abilities} abilities The actives and passives of the character
- *
- * @export
  */
 export interface ICharacter {
+  /** The name of the character */
   readonly name: string;
 
+  /** The level of the character */
   level?: number;
+  /** The health points of the character (max and current) */
   readonly healthPoints?: HP;
+  /** The ideology of the character */
   readonly alignment?: Alignment;
+  /** The stats of the character */
   readonly stats?: Stats;
+  /** The languages that the character knows */
   readonly languages?: Language[];
+  /** A race object alike */
   race?: IRace;
 
   // Will be assigned when selecting class, race, etc.
+  /** The things that the character is good at */
   readonly proficiencies?: Proficiencies;
+  /** Capacity of movement available (given by the race) */
   speed?: number;
+  /** The size of the character (given by the race) */
   size?: Size;
+  /** The actives and passives of the character */
   readonly abilities?: Abilities;
 }
 
 /**
  * @classdesc Represent a D&D character
  *
- * @implements ICharacter
  * @export
  * @default
  */
@@ -221,6 +216,7 @@ export default class Character implements ICharacter {
 
   /**
    * @brief Add a proficiency to the character
+   *
    * @param proficiencyType The type of the proficiency (armor, weapons, tools, savingThrows, skills)
    * @param proficiency The specific proficiency to add
    */

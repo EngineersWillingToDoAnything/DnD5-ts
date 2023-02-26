@@ -5,7 +5,6 @@ import { lucky, brave, nimble } from './race_abilities';
 /**
  * @classdesc Represents a race with the Halfling attributes
  *
- * @extends Race
  * @export
  * @default
  */

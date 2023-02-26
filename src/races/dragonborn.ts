@@ -5,7 +5,6 @@ import { breathWeapon, damageResistance } from './race_abilities';
 /**
  * @classdesc Represents a race with the Dragonborn attributes
  *
- * @extends Race
  * @export
  * @default
  */

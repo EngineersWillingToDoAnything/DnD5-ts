@@ -5,7 +5,6 @@ import { darkVision, gnomeCunning } from './race_abilities';
 /**
  * @classdesc Represents a race with the Gnome attributes
  *
- * @extends Race
  * @export
  * @default
  */
