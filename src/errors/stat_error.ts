@@ -1,9 +1,4 @@
-/**
- * @classdesc Error class for when a stat value is invalid (e.g. too high or too low)
- *
- * @extends Error
- * @export
- */
+/** @classdesc Error class for when a stat value is invalid (e.g. too high or too low). */
 export default class StatError extends Error {
   /** All the possible messages */
   private static readonly messages: string[] = [
@@ -16,21 +11,20 @@ export default class StatError extends Error {
   ];
 
   /**
-   * @brief Call the Error constructor with the message and set the name of the error
+   * @desc Call the Error constructor with the message and set the name of the error.
    *
-   * @param opcode The opcode of the message
+   * @param opcode - The opcode of the message.
    */
   constructor(opcode: number = -1) {
-    if (opcode < 0 || opcode >= StatError.messages.length) super('Unknown stat error');
-    else super(StatError.messages[opcode]);
+    super(StatError.messages[opcode] ?? 'Unknown stat error');
     this.name = 'StatError';
   }
 
   /**
-   * @brief Get the message associated with the opcode
+   * @desc Get the message associated with the opcode.
    *
-   * @param messageOpcode The opcode of the message
-   * @returns The message of the error
+   * @param messageOpcode - The opcode of the message.
+   * @returns The message of the error.
    */
   public static getMessage(opcode: number): string {
     return StatError.messages[opcode];

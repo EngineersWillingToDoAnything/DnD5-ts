@@ -1,19 +1,15 @@
-import type { Alignment, HP, Language, Stats, Proficiencies, Size, Abilities } from "./types";
-import StatError from "./errors/stat_error";
-import type { IRace } from "./race";
+import type { Alignment, HP, Language, Stats, Proficiencies, Size, Abilities } from './types';
+import StatError from './errors/stat_error';
+import type { IRace } from './race';
 
-/**
- * @description The stats of a character
- */
+/** @desc The stats of a character. */
 interface CharStats extends Stats {
   /** The number of points that can be assigned to the stats */
   assignablePoints: number;
 }
 
-/**
- * @description The basic information about a character
- */
-export interface ICharacter {
+/** @desc The basic information about a character. */
+export interface CharacterProperties {
   /** The name of the character */
   readonly name: string;
 
@@ -41,13 +37,8 @@ export interface ICharacter {
   readonly abilities?: Abilities;
 }
 
-/**
- * @classdesc Represent a D&D character
- *
- * @export
- * @default
- */
-export default class Character implements ICharacter {
+/** @classdesc Represent a D&D character. */
+export default class Character implements CharacterProperties {
   public level: number = 1;
   public readonly name: string = '';
   public readonly healthPoints: HP = { max: 3, current: 3 };
@@ -68,10 +59,17 @@ export default class Character implements ICharacter {
   public readonly abilities: Abilities = {};
 
   /**
-   * Create a new DnD character
-   * @param data The possible information about the character
+   * @desc Create a new DnD character with the information provided
+   *   (or the default values if none provided).
+   *   - The stats will be initialized with 8 points each.
+   *   - It will know Common.
+   *   - It will have 27 points to assign to the stats.
+   *   - It will have 3 health points.
+   *   
+   *
+   * @param data - The possible information about the character.
    */
-  constructor(data: ICharacter) {
+  constructor(data: CharacterProperties) {
     this.name = data.name;
     if (data?.level) this.level = data.level;
     if (data?.healthPoints) this.healthPoints = data.healthPoints;
@@ -99,83 +97,82 @@ export default class Character implements ICharacter {
   }
 
   /**
-   * @brief Receive a certain amount of damage
+   * @desc Receive a certain amount of damage.
    *
-   * @param damage The amount of damage to take
+   * @param damage - The amount of damage to take.
    */
-  public takeDamage(damage: number) {
+  public takeDamage(damage: number): void {
     this.healthPoints.current -= damage;
     if (this.healthPoints.current < 0) this.healthPoints.current = 0;
   }
 
-  /**
-   * @brief Reset the health points to the maximum
-   */
-  public resetHealth() {
+  /** @desc Reset the health points to the maximum. */
+  public resetHealth(): void {
     this.healthPoints.current = this.healthPoints.max;
   }
 
   /**
-   * @brief Heal the character by a certain amount
+   * @desc Heal the character by a certain amount.
    *
-   * @param healAmount The amount of health to heal
+   * @param healAmount - The amount of health to heal.
    */
-  public heal(healAmount: number) {
+  public heal(healAmount: number): void {
     this.healthPoints.current += healAmount;
-    if (this.healthPoints.current > this.healthPoints.max) this.healthPoints.current = this.healthPoints.max;
+    if (this.healthPoints.current > this.healthPoints.max)
+      this.healthPoints.current = this.healthPoints.max;
   }
 
   /**
-   * @brief Tell if the character knows a certain language
+   * @desc Tell if the character knows a certain language.
    *
-   * @param language The language to check
-   * @returns True if the character knows the language, false otherwise
+   * @param language - The language to check.
+   * @returns True if the character knows the language, false otherwise.
    */
   public knowsLanguage(language: Language): boolean {
     return this.languages.includes(language);
   }
 
   /**
-   * @brief Add a language to the character
+   * @desc Add a language to the character.
    *
-   * @param language The language to learn
+   * @param language - The language to learn.
    */
-  public learnLanguage(language: Language) {
+  public learnLanguage(language: Language): void {
     if (!this.knowsLanguage(language)) this.languages.push(language);
   }
 
   /**
-   * @brief Remove a language from the character
-   * @param language The language to forget
+   * @desc Remove a language from the character
+   *
+   * @param language - The language to forget.
    */
-  public forgetLanguage(language: Language) {
+  public forgetLanguage(language: Language): void {
     if (this.knowsLanguage(language)) this.languages.splice(this.languages.indexOf(language), 1);
   }
 
-  /**
-   * @brief Remove all languages from the character (except Common)
-   */
-  public forgetAllLanguages() {
-    this.languages.splice(1);
+  /** @desc Remove all languages from the character (except Common). */
+  public forgetAllLanguages(): void {
+    this.languages.length = 0;
+    this.languages.push('Common');
   }
 
   /**
-   * @brief Get the languages the character knows
+   * @desc Get the languages the character knows.
    *
-   * @returns The languages the character knows
+   * @returns The languages the character knows.
    */
   public languagesKnown(): Language[] {
     return this.languages;
   }
 
   /**
-   * @brief Add a certain amount of points to a stat
-   * @param stat The stat to add points to
-   * @param points The amount of points to add
+   * @desc Add a certain amount of points to a stat.
+   *
+   * @param stat - The stat to add points to.
+   * @param points - The amount of points to add.
    */
-  public addPointsToStat(stat: keyof Stats, points: number) {
+  public addPointsToStat(stat: keyof Stats, points: number): void {
     if (points < 0) throw new StatError(0);
-
     if (this.stats.assignablePoints < points) throw new StatError(3);
 
     const statValue = this.stats[stat] as number;
@@ -189,10 +186,8 @@ export default class Character implements ICharacter {
     this.stats.assignablePoints -= points;
   }
 
-  /**
-   * @brief Reset all stats to 8
-   */
-  public resetStats() {
+  /** @desc Reset all stats to 8 points. */
+  public resetStats(): void {
     for (const stat in this.stats) {
       if (stat !== 'assignablePoints') this.stats[stat as keyof Stats] = 8;
     }
@@ -200,11 +195,12 @@ export default class Character implements ICharacter {
   }
 
   /**
-   * @brief Remove a certain amount of points from a stat
-   * @param stat The stat to remove points from
-   * @param points The amount of points to remove
+   * @desc Remove a certain amount of points from a stat.
+   *
+   * @param stat - The stat to remove points from.
+   * @param points - The amount of points to remove.
    */
-  public removePointsFromStat(stat: keyof Stats, points: number) {
+  public removePointsFromStat(stat: keyof Stats, points: number): void {
     if (points < 0) throw new StatError(4);
 
     const statValue = this.stats[stat] as number;
@@ -215,20 +211,20 @@ export default class Character implements ICharacter {
   }
 
   /**
-   * @brief Add a proficiency to the character
+   * @desc Add a proficiency to the character
    *
-   * @param proficiencyType The type of the proficiency (armor, weapons, tools, savingThrows, skills)
-   * @param proficiency The specific proficiency to add
+   * @param proficiencyType - The type of the proficiency (armor, weapons, tools, savingThrows, skills).
+   * @param proficiency - The specific proficiency to add.
    */
   public addProficiency <T extends keyof Proficiencies> (
-    proficiencyType: T, proficiency: Proficiencies[T]) {
-    this.proficiencies[proficiencyType].push(...proficiency);
+    proficiencyType: T, proficiency: Proficiencies[T]): void {
+    this.proficiencies[proficiencyType].push(...proficiency as (keyof Stats)[]);
   }
 
   /**
-   * @brief Assign a race to the character
+   * @desc Assign a race to the character.
    *
-   * @param race The race to get the values from
+   * @param race - The race to get the values from.
    */
   public assignRace (race: IRace): void {
     this.raceName = race.name;
@@ -236,12 +232,9 @@ export default class Character implements ICharacter {
     this.speed = race.speed;
     if (race.extraStatsPoints) {
       for (const stat in race.extraStatsPoints) {
-        // In case it add points just like the constructor
-        // this.addPointsToStat(stat as keyof Stats, race.extraStatsPoints[stat as keyof Stats] as number);
-
-        // In case it adds points to the base stats
-        const statValue = this.stats[stat as keyof Stats] as number;
-        this.stats[stat as keyof Stats] = statValue + (race.extraStatsPoints[stat as keyof Stats] as number);
+        const currentStat = stat as keyof Stats;
+        const statValue = this.stats[currentStat] as number;
+        this.stats[currentStat] = statValue + (race.extraStatsPoints[currentStat] as number);
       }
     }
     Object.assign(this.abilities, race.abilities);

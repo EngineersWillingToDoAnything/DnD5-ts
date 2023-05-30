@@ -34,8 +34,8 @@ export interface Alignment {
 }
 
 /**
- * Six Abilities that provides a quick description of every creature's
- * physical and mental characteristics
+ * @desc Six Abilities that provides a quick description of every creature's
+ *   physical and mental characteristics.
  */
 export interface Stats {
   /** Measuring physical power */
@@ -52,41 +52,21 @@ export interface Stats {
   charisma?: number;
 }
 
-/**
- * Type of each proficiency
- *
- * @property {string} armor
- * @property {string} weapons
- * @property {string} tools
- * @property {keyof Stats} savingThrows
- * @property {string} skills
- */
-interface ProficiencyTypes {
-  armor: string;
-  weapons: string;
-  tools: string;
-  savingThrows: keyof Stats;
-  skills: string;
+/** @desc Things a character is good at. */
+export interface Proficiencies {
+  /** Armor that the character knows how to wear effectively. */
+  armor: string[];
+  /** Weapons that the characters knows how to use effectively. */
+  weapons: string[];
+  /** Tools that the character knows how to use effectively. */
+  tools: string[];
+  /** Things that the character is good at evading or resisting. */
+  savingThrows: (keyof Stats)[];
+  /** Skills that the character is good at. */
+  skills: string[];
 }
 
-/**
- * Things a character is good at
- *
- * @property {string[]} armor Armor that the character knows how to wear effectively
- * @property {string[]} weapons Weapons that the characters knows how to use effectively
- * @property {string[]} tools Tools that the character knows how to use effectively
- * @property {keyof Stats[]} savingThrows Things that the character is good at evading or resisting
- * @property {string[]} skills Skills that the character is good at
- *
- */
-export type Proficiencies = {
-  [Key in keyof ProficiencyTypes]: ProficiencyTypes[Key][];
-}
-
-/**
- * @enum {string} The possible sizes of a creature
- * @readonly
- */
+/** @desc The possible sizes of a creature. */
 const Sizes = {
   Tiny: 'Tiny',
   Small: 'Small',
@@ -97,25 +77,23 @@ const Sizes = {
 } as const;
 
 /**
- * A type version of the 'Sizes' used to make sure that the size is one of the
- * possible sizes.
+ * @desc A type version of the 'Sizes' used to make sure that the size is one
+ *   of the possible sizes.
  *
  * @memberof Sizes
  */
 export type Size = typeof Sizes[keyof typeof Sizes];
 
-/**
- * An active or passive skill of a creature.
- */
+/** @desc An active or passive skill of a creature. */
 export interface Ability {
   /** A description of the ability. */
   description: string;
 }
 
 /**
- * A collection of abilities.
+ * @desc A collection of abilities.
+ *    The key is the name of the ability and the value is the ability itself.
  *
- * @property {Ability} [key] The ability with the key as name.
  * @example
  * ```ts
  * {
@@ -124,6 +102,4 @@ export interface Ability {
  * }
  * ```
  */
-export type Abilities = {
-  [key: string]: Ability;
-}
+export type Abilities = Record<string, Ability>;

@@ -1,8 +1,6 @@
 import type { Size, Stats, Abilities } from './types';
 
-/**
- * @description The basic information about a Race
- */
+/** @desc The basic information about a Race. */
 export interface IRace {
   /** The race's name */
   readonly name: string;
@@ -16,12 +14,7 @@ export interface IRace {
   readonly abilities?: Abilities;
 }
 
-/**
- * @classdesc Covers every modifier related to the character's race
- *
- * @abstract
- * @export
- */
+/** @classdesc Covers every modifier related to the character's race. */
 export default abstract class Race implements IRace {
   public readonly name: string;
   public readonly speed: number;
@@ -30,8 +23,9 @@ export default abstract class Race implements IRace {
   public readonly abilities: Abilities = {};
 
   /**
-   * Initialize the general values of the race
-   * @param data A Race like object to get the values from
+   * @desc Initialize the general values of the race.
+   *
+   * @param data - A Race like object to get the values from
    */
   constructor(data: IRace) {
     this.name = data.name;

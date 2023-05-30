@@ -2,15 +2,11 @@ import Race from '../race';
 
 import { breathWeapon, damageResistance } from './race_abilities';
 
-/**
- * @classdesc Represents a race with the Dragonborn attributes
- *
- * @export
- * @default
- */
+/** @classdesc Represents a race with the Dragonborn attributes. */
 export default class Dragonborn extends Race {
   /**
-   * Pass the values to the parent constructor that constitutes a Dragonborn
+   * @desc Pass the values to the parent constructor that constitutes a
+   *   Dragonborn.
    */
   constructor() {
     super({
@@ -24,7 +20,7 @@ export default class Dragonborn extends Race {
       abilities: {
         breathWeapon,
         damageResistance,
-      },
+      }
     });
   }
 }

@@ -1,5 +1,4 @@
 import Character from '../src/character';
-
 import StatError from '../src/errors/stat_error';
 import Human from '../src/races/human';
 import { Ability } from '../src/types';
@@ -192,6 +191,7 @@ describe ('Character language system', () => {
     expect(testCharacter.languagesKnown()).toHaveLength(4); // Common + 3 new languages
     testCharacter.forgetAllLanguages();
     expect(testCharacter.languagesKnown()).toHaveLength(1); // Common
+    expect(testCharacter.knowsLanguage('Common')).toBeTruthy();
   });
 });
 
