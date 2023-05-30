@@ -1,4 +1,4 @@
-import type { Size, Stats, Abilities } from './types';
+import type { Size, Attributes, Abilities } from './types';
 
 /** @desc The basic information about a Race. */
 export interface RaceProperties {
@@ -8,8 +8,8 @@ export interface RaceProperties {
   readonly speed: number;
   /** The average size of an specimen of the race */
   readonly size: Size;
-  /** The amount of extra points to stats that gives the race */
-  readonly extraStatsPoints: Partial<Stats>;
+  /** The amount of extra points to Attributes that gives the race */
+  readonly extraAttributesPoints: Partial<Attributes>;
   /** The actives and passives of the race */
   readonly abilities?: Abilities;
 }
@@ -19,7 +19,7 @@ export default abstract class Race implements RaceProperties {
   public readonly name: string;
   public readonly speed: number;
   public readonly size: Size;
-  public readonly extraStatsPoints: Partial<Stats> = {};
+  public readonly extraAttributesPoints: Partial<Attributes> = {};
   public readonly abilities: Abilities = {};
 
   /**
@@ -32,7 +32,7 @@ export default abstract class Race implements RaceProperties {
     if (data.speed < 0) throw new Error('The speed of the race cannot be negative');
     this.speed = data.speed;
     this.size = data.size;
-    Object.assign(this.extraStatsPoints, data.extraStatsPoints);
+    Object.assign(this.extraAttributesPoints, data.extraAttributesPoints);
     Object.assign(this.abilities, data.abilities);
   }
 }
