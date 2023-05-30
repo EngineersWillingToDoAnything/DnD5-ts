@@ -1,0 +1,10 @@
+{
+  "entryPoints": [
+    "./src/**"
+  ],
+  "entryPointStrategy": "resolve",
+  "name": "DnD 5e API",
+  "out": "./docs",
+  "readme": "README.md",
+  "tsconfig": "./tsconfig.json"
+}

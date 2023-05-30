@@ -17,3 +17,6 @@ dist/**/*
 # ignore yarn.lock
 yarn.lock
 package-lock.json
+
+# Yarn generated log
+yarn-error.log

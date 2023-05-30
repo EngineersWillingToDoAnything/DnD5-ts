@@ -5,7 +5,6 @@ import { extraLanguage } from './race_abilities';
 /**
  * @classdesc Represents a race with the human attributes
  *
- * @extends Race
  * @export
  * @default
  */

@@ -5,9 +5,7 @@
  * @export
  */
 export default class StatError extends Error {
-  /**
-   * All the possible messages
-   */
+  /** All the possible messages */
   private static readonly messages: string[] = [
     'Cannot add negative points',
     'Cannot have a stat above 18 on level 1',

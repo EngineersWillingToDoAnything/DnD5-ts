@@ -1,4 +1,4 @@
-import StatError from '@/errors/stat_error';
+import StatError from '../src/errors/stat_error';
 
 describe.each([
   { name: 'StatError', ErrorClass: StatError },

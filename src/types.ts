@@ -1,10 +1,12 @@
 /**
  * The max and current health points of an entity
- *
- * @property {number} max The maximum health points the character can have
- * @property {number} current The current health points the character has
  */
-export interface HP { max: number, current: number };
+export interface HP {
+  /** The maximum health points the character can have */
+  max: number,
+  /** The current health points the character has */
+  current: number
+};
 
 /**
  * All the languages available in the dnd world.
@@ -23,31 +25,30 @@ type Moral = 'Good' | 'Neutral' | 'Evil';
 
 /**
  * The alignment of a character
- *
- * @property {Ethical} ethical The character's ethical alignment
- * @property {Moral} moral The character's moral alignment
  */
 export interface Alignment {
+  /** The character's ethical alignment */
   ethical: Ethical;
+  /** The character's moral alignment */
   moral: Moral;
 }
+
 /**
  * Six Abilities that provides a quick description of every creature's
  * physical and mental characteristics
- *
- * @property {number} strength Measuring physical power
- * @property {number} dexterity Measuring agility
- * @property {number} constitution Measuring endurance
- * @property {number} intelligence Measuring reasoning and memory
- * @property {number} wisdom Measuring Perception and Insight
- * @property {number} charisma Measuring force of Personality
  */
 export interface Stats {
+  /** Measuring physical power */
   strength?: number;
+  /** Measuring agility */
   dexterity?: number;
+  /** Measuring endurance */
   constitution?: number;
+  /** Measuring reasoning and memory */
   intelligence?: number;
+  /** Measuring Perception and Insight */
   wisdom?: number;
+  /** Measuring force of Personality */
   charisma?: number;
 }
 
@@ -105,10 +106,9 @@ export type Size = typeof Sizes[keyof typeof Sizes];
 
 /**
  * An active or passive skill of a creature.
- *
- * @property {string} description A description of the ability.
  */
 export interface Ability {
+  /** A description of the ability. */
   description: string;
 }
 
@@ -117,10 +117,12 @@ export interface Ability {
  *
  * @property {Ability} [key] The ability with the key as name.
  * @example
+ * ```ts
  * {
  *  'Flying': {
  *    description: 'The creature can fly'
  * }
+ * ```
  */
 export type Abilities = {
   [key: string]: Ability;
