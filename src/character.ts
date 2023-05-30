@@ -1,6 +1,6 @@
 import type { Alignment, HP, Language, Stats, Proficiencies, Size, Abilities } from './types';
 import StatError from './errors/stat_error';
-import type { IRace } from './race';
+import type { RaceProperties } from './race';
 
 /** @desc The stats of a character. */
 interface CharStats extends Stats {
@@ -20,11 +20,11 @@ export interface CharacterProperties {
   /** The ideology of the character */
   readonly alignment?: Alignment;
   /** The stats of the character */
-  readonly stats?: Stats;
+  readonly stats?: Partial<Stats>;
   /** The languages that the character knows */
   readonly languages?: Language[];
   /** A race object alike */
-  race?: IRace;
+  race?: RaceProperties;
 
   // Will be assigned when selecting class, race, etc.
   /** The things that the character is good at */
@@ -65,7 +65,6 @@ export default class Character implements CharacterProperties {
    *   - It will know Common.
    *   - It will have 27 points to assign to the stats.
    *   - It will have 3 health points.
-   *   
    *
    * @param data - The possible information about the character.
    */
@@ -175,14 +174,13 @@ export default class Character implements CharacterProperties {
     if (points < 0) throw new StatError(0);
     if (this.stats.assignablePoints < points) throw new StatError(3);
 
-    const statValue = this.stats[stat] as number;
     if (this.level === 1) {
-      if (statValue + points > 18) throw new StatError(1);
+      if (this.stats[stat] + points > 18) throw new StatError(1);
     } else {
-      if (statValue + points > 20) throw new StatError(2);
+      if (this.stats[stat] + points > 20) throw new StatError(2);
     }
 
-    this.stats[stat] = statValue + points;
+    this.stats[stat] += points;
     this.stats.assignablePoints -= points;
   }
 
@@ -202,11 +200,8 @@ export default class Character implements CharacterProperties {
    */
   public removePointsFromStat(stat: keyof Stats, points: number): void {
     if (points < 0) throw new StatError(4);
-
-    const statValue = this.stats[stat] as number;
-    if (statValue - points < 0) throw new StatError(5);
-
-    this.stats[stat] = statValue - points;
+    if (this.stats[stat] - points < 0) throw new StatError(5);
+    this.stats[stat] -= points;
     this.stats.assignablePoints += points;
   }
 
@@ -226,17 +221,16 @@ export default class Character implements CharacterProperties {
    *
    * @param race - The race to get the values from.
    */
-  public assignRace (race: IRace): void {
+  public assignRace (race: RaceProperties): void {
     this.raceName = race.name;
     this.size = race.size;
     this.speed = race.speed;
     if (race.extraStatsPoints) {
       for (const stat in race.extraStatsPoints) {
         const currentStat = stat as keyof Stats;
-        const statValue = this.stats[currentStat] as number;
-        this.stats[currentStat] = statValue + (race.extraStatsPoints[currentStat] as number);
+        this.stats[currentStat] += race.extraStatsPoints[currentStat] as number;
       }
     }
     Object.assign(this.abilities, race.abilities);
   }
-}
+};

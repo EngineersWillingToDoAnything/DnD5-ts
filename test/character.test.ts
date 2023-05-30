@@ -2,7 +2,7 @@ import Character from '../src/character';
 import StatError from '../src/errors/stat_error';
 import Human from '../src/races/human';
 import { Ability } from '../src/types';
-import type { IRace } from '../src/race';
+import type { RaceProperties } from '../src/race';
 
 let testCharacter: Character;
 beforeAll (() => {
@@ -381,7 +381,7 @@ describe ('Character proficiency system', () => {
 describe ('Assignation of properties from a race', () => {
   it ('Should assign the features coming from the race ', () => {
     const otherCharacter = new Character({ name: 'Damiano David' });
-    const race: IRace = { name: 'Human', speed: 30, size: 'Medium', extraStatsPoints: {} };
+    const race: RaceProperties = { name: 'Human', speed: 30, size: 'Medium', extraStatsPoints: {} };
 
     otherCharacter.assignRace(race);
     expect(otherCharacter.speed).toBe(30);
@@ -412,7 +412,7 @@ describe ('Assignation of properties from a race', () => {
     const darkVision: Ability = {
       description: "You can see in the dark up to 60 feet"
     }
-    const raceToTest: IRace = {
+    const raceToTest: RaceProperties = {
       name: 'Programmer',
       speed: 30,
       size: 'Medium',

@@ -1,7 +1,7 @@
 import type { Size, Stats, Abilities } from './types';
 
 /** @desc The basic information about a Race. */
-export interface IRace {
+export interface RaceProperties {
   /** The race's name */
   readonly name: string;
   /** Capacity of movement available for the race */
@@ -9,17 +9,17 @@ export interface IRace {
   /** The average size of an specimen of the race */
   readonly size: Size;
   /** The amount of extra points to stats that gives the race */
-  readonly extraStatsPoints: Stats;
+  readonly extraStatsPoints: Partial<Stats>;
   /** The actives and passives of the race */
   readonly abilities?: Abilities;
 }
 
 /** @classdesc Covers every modifier related to the character's race. */
-export default abstract class Race implements IRace {
+export default abstract class Race implements RaceProperties {
   public readonly name: string;
   public readonly speed: number;
   public readonly size: Size;
-  public readonly extraStatsPoints: Stats = {};
+  public readonly extraStatsPoints: Partial<Stats> = {};
   public readonly abilities: Abilities = {};
 
   /**
@@ -27,7 +27,7 @@ export default abstract class Race implements IRace {
    *
    * @param data - A Race like object to get the values from
    */
-  constructor(data: IRace) {
+  constructor(data: RaceProperties) {
     this.name = data.name;
     if (data.speed < 0) throw new Error('The speed of the race cannot be negative');
     this.speed = data.speed;

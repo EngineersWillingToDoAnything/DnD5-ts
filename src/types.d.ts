@@ -39,17 +39,17 @@ export interface Alignment {
  */
 export interface Stats {
   /** Measuring physical power */
-  strength?: number;
+  strength: number;
   /** Measuring agility */
-  dexterity?: number;
+  dexterity: number;
   /** Measuring endurance */
-  constitution?: number;
+  constitution: number;
   /** Measuring reasoning and memory */
-  intelligence?: number;
+  intelligence: number;
   /** Measuring Perception and Insight */
-  wisdom?: number;
+  wisdom: number;
   /** Measuring force of Personality */
-  charisma?: number;
+  charisma: number;
 }
 
 /** @desc Things a character is good at. */
