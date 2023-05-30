@@ -1,9 +1,9 @@
 import Character from '../src/character';
 
-import StatError from '@/errors/stat_error';
+import StatError from '../src/errors/stat_error';
 import Human from '../src/races/human';
+import { Ability } from '../src/types';
 import type { IRace } from '../src/race';
-import { Ability } from 'src/types';
 
 let testCharacter: Character;
 beforeAll (() => {

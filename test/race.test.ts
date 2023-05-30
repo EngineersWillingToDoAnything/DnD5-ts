@@ -1,6 +1,5 @@
 import Race from '../src/race';
-
-import { Ability } from 'src/types';
+import { Ability } from '../src/types';
 
 // Since it's an abstract class, we need to create a child class to test it
 class RaceTested extends Race {};

@@ -1,27 +1,3 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-*.swp
-
-pids
-logs
-results
-tmp
-
-# Build
-public/css/main.css
-
-# Coverage reports
-coverage
-
-# API keys and secrets
-.env
-
 # Dependency directory
 node_modules
 bower_components
@@ -38,5 +14,9 @@ Thumbs.db
 # Ignore built ts files
 dist/**/*
 
-# ignore yarn.lock
+# Ignore lock files
 yarn.lock
+package-lock.json
+
+# Yarn generated log
+yarn-error.log
