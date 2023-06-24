@@ -1,4 +1,4 @@
-import { CreatureType, Size } from './types';
+import { CreatureType, Size } from './enums';
 import type { Alignment, Attributes, Stats, Proficiencies, Language } from './types'
 
 /** @desc Define the properties an entity must have. */
@@ -18,10 +18,14 @@ export default class Entity implements EntityProperties {
   public creatureType: CreatureType = CreatureType.Humanoid;
   public alignment: Alignment;
   public speed: number = 0;
+  /** The size of the entity (commonly given by the race). */
   public size: Size = Size.Medium;
+  /** How much health points the entity has. */
   public currentHP: number = 0;
   public proficiencyBonus: number = 0;
+  /** The languages that the entities knows. */
   public languages: Language[] = ['Common'];
+  /** The stats of the entity. */
   public stats: Stats = {
     maxHP: 0,
     armorClass: 0,
@@ -64,6 +68,7 @@ export default class Entity implements EntityProperties {
       charisma: 0,
     }
   }
+  /** The things that the entity is good at. */
   public proficiencies: Proficiencies = {
     armor: [],
     weapons: [],
@@ -78,10 +83,10 @@ export default class Entity implements EntityProperties {
    *
    * @param data - The data to create the entity.
    */
-  constructor(data: EntityProperties) {
+  constructor(data: Partial<EntityProperties> & Pick<EntityProperties, 'name' | 'alignment'>) {
     this.name = data.name;
     this.alignment = data.alignment;
-    this.proficiencies = data.proficiencies;
+    if (data.proficiencies) this.proficiencies = data.proficiencies;
   }
 
   // ------------------------------------------------ Setters Section ------------------------------------------------ //
