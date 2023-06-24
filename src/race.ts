@@ -1,4 +1,5 @@
-import type { Size, Attributes, Abilities } from './types';
+import { Size } from './enums';
+import type { Attributes, Abilities } from './types';
 
 /** @desc The basic information about a Race. */
 export interface RaceProperties {
