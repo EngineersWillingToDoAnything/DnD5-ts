@@ -1,4 +1,5 @@
 import Entity from '../src/entity';
+import { Size } from '../src/enums';
 
 const testEntity = new Entity({
   name: 'Spike',
@@ -83,6 +84,47 @@ describe('Entity properties test', () => {
       Object.values(testEntity.stats.savingThrows).forEach((savingThrow) => {
         expect(savingThrow).toStrictEqual(0);
       });
+    });
+  });
+});
+
+describe('Entity setters', () => {
+  it('Should be able to set the max HP', () => {
+    testEntity.setMaxHP(10);
+    expect(testEntity.stats.maxHP).toStrictEqual(10);
+  });
+
+  it('Should be able to set the speed', () => {
+    testEntity.setSpeed(10);
+    expect(testEntity.speed).toStrictEqual(10);
+  });
+
+  it('Should be able to set the armor class', () => {
+    testEntity.setArmorClass(10);
+    expect(testEntity.stats.armorClass).toStrictEqual(10);
+  });
+
+  it('Should be able to set the size', () => {
+    testEntity.setSize(Size.Small);
+    expect(testEntity.size).toStrictEqual('Small');
+  });
+
+  it('Should be able to set the proficiency bonus', () => {
+    testEntity.setProficiencyBonus(10);
+    expect(testEntity.proficiencyBonus).toStrictEqual(10);
+  });
+
+  it('Should be able to set the attributes', () => {
+    testEntity.setAttributes({
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10
+    });
+    Object.values(testEntity.stats.attributes).forEach((attribute) => {
+      expect(attribute).toStrictEqual(10);
     });
   });
 });
