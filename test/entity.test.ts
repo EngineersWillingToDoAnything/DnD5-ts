@@ -12,6 +12,7 @@ const testEntity = new Entity({
 beforeEach(() => {
   testEntity.setMaxHP(0);
   testEntity.resetHealth();
+  testEntity.forgetAllLanguages();
 });
 
 describe('Entity properties test', () => {
@@ -166,5 +167,49 @@ describe('Entity health system', () => {
     testEntity.setMaxHP(10);
     testEntity.heal(30);
     expect(testEntity.currentHP).toStrictEqual(10);
+  });
+});
+
+describe('Entity language system', () => {
+  it ('Should tell if it knows a language', () => {
+    expect(testEntity.knowsLanguage('Common')).toBeTruthy();
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+  });
+
+  it ('Should be able to learn a language', () => {
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+    testEntity.learnLanguage('Elvish');
+    expect(testEntity.knowsLanguage('Elvish')).toBeTruthy();
+  });
+
+  it ('Should not be able to learn a language twice', () => {
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+    testEntity.learnLanguage('Elvish');
+    testEntity.learnLanguage('Elvish');
+    expect(testEntity.languages).toHaveLength(2); // Common + Elvish
+  });
+
+  it ('Should be able to forget a language', () => {
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+    testEntity.learnLanguage('Elvish');
+    expect(testEntity.knowsLanguage('Elvish')).toBeTruthy();
+    testEntity.forgetLanguage('Elvish');
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+  });
+
+  it ('Should not be able to forget a language it does not know', () => {
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+    testEntity.forgetLanguage('Elvish');
+    expect(testEntity.knowsLanguage('Elvish')).toBeFalsy();
+  });
+
+  it ('Should be able to forget all languages (except Common)', () => {
+    testEntity.learnLanguage('Elvish');
+    testEntity.learnLanguage('Dwarvish');
+    testEntity.learnLanguage('Infernal');
+    expect(testEntity.languages).toHaveLength(4); // Common + 3 new languages
+    testEntity.forgetAllLanguages();
+    expect(testEntity.languages).toHaveLength(1); // Common
+    expect(testEntity.knowsLanguage('Common')).toBeTruthy();
   });
 });
