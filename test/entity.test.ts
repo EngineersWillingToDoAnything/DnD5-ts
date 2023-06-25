@@ -9,6 +9,11 @@ const testEntity = new Entity({
   }
 });
 
+beforeEach(() => {
+  testEntity.setMaxHP(0);
+  testEntity.resetHealth();
+});
+
 describe('Entity properties test', () => {
   it('Should have a name', () => {
     expect(testEntity.name).toStrictEqual('Spike');
@@ -126,5 +131,40 @@ describe('Entity setters', () => {
     Object.values(testEntity.stats.attributes).forEach((attribute) => {
       expect(attribute).toStrictEqual(10);
     });
+  });
+});
+
+describe('Entity health system', () => {
+  it('Should be able to reset the health', () => {
+    testEntity.setMaxHP(10);
+    testEntity.resetHealth();
+    expect(testEntity.currentHP).toStrictEqual(10);
+  });
+
+  it('Should be able to take damage', () => {
+    testEntity.setMaxHP(10);
+    testEntity.resetHealth();
+    testEntity.takeDamage(5);
+    expect(testEntity.currentHP).toStrictEqual(5);
+  });
+
+  it('Should not be able to take damage below 0', () => {
+    testEntity.setMaxHP(10);
+    testEntity.takeDamage(15);
+    expect(testEntity.currentHP).toStrictEqual(0);
+  });
+
+  it('Should be able to heal', () => {
+    testEntity.setMaxHP(10);
+    testEntity.resetHealth();
+    testEntity.takeDamage(7);
+    testEntity.heal(3);
+    expect(testEntity.currentHP).toStrictEqual(6);
+  });
+
+  it('Should not be able to heal above maxHP', () => {
+    testEntity.setMaxHP(10);
+    testEntity.heal(30);
+    expect(testEntity.currentHP).toStrictEqual(10);
   });
 });
