@@ -2,15 +2,10 @@ import Race from '../race';
 
 import { extraLanguage } from './race_abilities';
 
-/**
- * @classdesc Represents a race with the human attributes
- *
- * @export
- * @default
- */
+/** @classdesc Represents a race with the human attributes. */
 export default class Human extends Race {
   /**
-   * Pass the values to the parent constructor that constitutes a human
+   * @desc Pass the values to the parent constructor that constitutes a human.
    */
   constructor() {
     super({
@@ -27,7 +22,7 @@ export default class Human extends Race {
       },
       abilities: {
         extraLanguage,
-      },
+      }
     });
   }
 }
