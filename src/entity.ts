@@ -9,7 +9,6 @@ export interface EntityProperties {
   alignment: Alignment;
   /** Proficiencies of the entity */
   proficiencies: Proficiencies;
-  /** The languages that the character knows */
 }
 
 /** @classdesc General class to represent any type of entity on the DnD world. */

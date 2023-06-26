@@ -142,22 +142,25 @@ describe('Entity health system', () => {
     expect(testEntity.currentHP).toStrictEqual(10);
   });
 
+  it('Should be able to heal when assigning new maxHP', () => {
+    testEntity.setMaxHP(10, true);
+    expect(testEntity.currentHP).toStrictEqual(10);
+  });
+
   it('Should be able to take damage', () => {
-    testEntity.setMaxHP(10);
-    testEntity.resetHealth();
+    testEntity.setMaxHP(10, true);
     testEntity.takeDamage(5);
     expect(testEntity.currentHP).toStrictEqual(5);
   });
 
   it('Should not be able to take damage below 0', () => {
-    testEntity.setMaxHP(10);
+    testEntity.setMaxHP(10, true);
     testEntity.takeDamage(15);
     expect(testEntity.currentHP).toStrictEqual(0);
   });
 
   it('Should be able to heal', () => {
-    testEntity.setMaxHP(10);
-    testEntity.resetHealth();
+    testEntity.setMaxHP(10, true);
     testEntity.takeDamage(7);
     testEntity.heal(3);
     expect(testEntity.currentHP).toStrictEqual(6);
